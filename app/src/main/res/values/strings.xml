@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Hoduj jajko</string>
+    <string name="enter_timer_string">np. 25+5+25+5</string>
+    <string name="set_timer_string">Ustaw czasomierz</string>
+    <string name="timer1_string">25+5</string>
+    <string name="timer2_string">20+2</string>
+    <string name="timer3_string">15+2</string>
+    <string name="timer4_string">10+1</string>
+    <string name="timer5_string">45+5</string>
+    <string name="timer6_string">35+5</string>
+    <string name="timer7_string">45s+15s</string>
+    <string name="timer8_string">1+15s</string>
+    <string name="start_timer_string">START</string>
+    <string name="work_string">Praca własna</string>
+    <string name="running_string">Bieganie</string>
+    <string name="training_string">Trening</string>
+    <string name="your_activity_string">Twoja aktywność</string>
+    <string name="schedule_string">Twój grafik</string>
+</resources>
