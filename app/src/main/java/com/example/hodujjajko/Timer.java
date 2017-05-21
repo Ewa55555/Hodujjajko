@@ -2,6 +2,10 @@ package com.example.hodujjajko;
 
 
 import android.app.Activity;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -22,9 +26,9 @@ public class Timer extends Activity implements View.OnClickListener{
     private void init(){
         textViewTimer = (TextView)findViewById(R.id.textViewTime);
         textViewTimer.setOnClickListener(this);
-        textViewTimer.setText("00:03:00");
+        textViewTimer.setText("00:00:30");
 
-        final CounterClass timer = new CounterClass(3*60*1000,1000);
+        final CounterClass timer = new CounterClass(30*1000,1000);
         timer.start();
     }
 
@@ -52,7 +56,15 @@ public class Timer extends Activity implements View.OnClickListener{
 
         @Override
         public void onFinish() {
+            playSound();
             textViewTimer.setText("End");
+        }
+
+        public void playSound() {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+            r.play();
+
         }
     }
 }
