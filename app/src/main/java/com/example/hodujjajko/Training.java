@@ -7,10 +7,10 @@ import java.util.Date;
  */
 
 public class Training {
-    public int id;
+    public long id;
     public String typeOfTraining;
-    public Date start;
-    public Date finish;
+    public String start;
+    public String finish;
     public int duration;
     public int points;
     public boolean isDone;

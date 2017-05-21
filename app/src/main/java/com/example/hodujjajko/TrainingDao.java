@@ -1,8 +1,12 @@
 package com.example.hodujjajko;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,32 +15,97 @@ import java.util.List;
  */
 
 public class TrainingDao implements ITrainingDAO{
-    public TrainingDao()
+    private SQLiteDatabase database;
+    private DatabaseHelper databaseHelper;
+    ContentValues initialValues = new ContentValues();
+    private String[] allColumns = { DatabaseHelper.COLUMN_ID,
+            DatabaseHelper.COLUMN_TYPE_OF_TRAINING, DatabaseHelper.COLUMN_START,
+            DatabaseHelper.COLUMN_FINISH, DatabaseHelper.COLUMN_DURATION,
+            DatabaseHelper.COLUMN_POINTS, DatabaseHelper.COLUMN_IS_DONE };
+
+    public TrainingDao(Context context)
     {
-        // jeśli zrobić tu dziedziczenie po DBContentProvider to będzie super(db);
+        databaseHelper = DatabaseHelper.getInstance(context);
     }
-    @Override
-    public boolean addTraining(Training training)
-    {
-        return false;
+    public void open() throws SQLException {
+        database = databaseHelper.getWritableDatabase();
+    }
+    public void close() {
+        databaseHelper.close();
     }
 
     @Override
-    public boolean deleteTraining(Training training)
+    public boolean addTraining(Training training)
     {
-        return false;
+        setContentValue(training);
+        try {
+            return database.insert(DatabaseHelper.TABLE_TRAINING, null, getContentValue()) > 0;
+        } catch (SQLiteConstraintException ex){
+            Log.w("Database", ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public void deleteTraining(Training training)
+    {
+        long id = training.id;
+        database.delete(DatabaseHelper.TABLE_TRAINING, DatabaseHelper.COLUMN_ID
+                + " = " + id, null);
     }
 
     @Override
     public Training fetchTrainingById(int trainingId)
     {
-        return null;
+        Training training = new Training();
+        Cursor cursor = database.rawQuery("SELECT * FROM" + DatabaseHelper.TABLE_TRAINING + "WHERE" + DatabaseHelper.COLUMN_ID
+                + " = " + trainingId, null );
+
+        training = cursorToTraining(cursor);
+        return training;
     }
 
     @Override
     public List<Training> fetchAllData() {
         List<Training> trainingList = new ArrayList<Training>();
-        // tutaj cursor jeśli znowu będe dziedziczyć po Provider???
-        return null;
+        Cursor cursor = database.query(DatabaseHelper.TABLE_TRAINING,
+                allColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Training training = cursorToTraining(cursor);
+            trainingList.add(training);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return trainingList;
     }
+    private Training cursorToTraining (Cursor cursor) {
+        //format daty ?
+        Training training= new Training();
+        training.id = cursor.getLong(0);
+        training.typeOfTraining = cursor.getString(1);
+        training.start = cursor.getString(2);
+        training.finish = cursor.getString(3);
+        training.duration = cursor.getInt(4);
+        training.points = cursor.getInt(5);
+        training.isDone = Boolean.getBoolean(cursor.getString(6));
+
+        return training;
+    }
+
+    private void setContentValue(Training training) {
+        initialValues.put(DatabaseHelper.COLUMN_TYPE_OF_TRAINING, training.id);
+        initialValues.put(DatabaseHelper.COLUMN_START, training.start);
+        initialValues.put(DatabaseHelper.COLUMN_FINISH, training.finish);
+        initialValues.put(DatabaseHelper.COLUMN_DURATION, training.duration);
+        initialValues.put(DatabaseHelper.COLUMN_POINTS, training.points);
+        initialValues.put(DatabaseHelper.COLUMN_IS_DONE, training.isDone);
+
+    }
+    private ContentValues getContentValue() {
+        return initialValues;
+    }
+
+
 }
