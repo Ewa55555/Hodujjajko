@@ -2,6 +2,7 @@ package com.example.hodujjajko;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,7 +56,9 @@ public class SettingTimer extends Activity implements View.OnClickListener{
         int i = 0;
         boolean found = false;
         if (v.getId() == R.id.startTimer){
-            Log.i("Jajko", "alo");
+            Intent timerIntent = null;
+            timerIntent = new Intent(getApplicationContext(), Timer.class);
+            startActivity(timerIntent);
         }else{
             while(i<BUTTON_IDS.length && !found) {
                 if (BUTTON_IDS[i] == v.getId()) {

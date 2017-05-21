@@ -24,6 +24,10 @@
             android:name=".SettingTimer"
             android:label="Setting Timer" >
         </activity>
+        <activity
+            android:name=".Timer"
+            android:label="Timer" >
+        </activity>
     </application>
 
 </manifest>
