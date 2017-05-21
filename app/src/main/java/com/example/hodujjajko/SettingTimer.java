@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SettingTimer extends Activity implements View.OnClickListener{
@@ -52,12 +51,30 @@ public class SettingTimer extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        int i = 0;
+        boolean found = false;
         if (v.getId() == R.id.startTimer){
             Log.i("Jajko", "alo");
         }else{
-            Log.i("Jajko", "znalazlam buttona");
-            int index = (Integer)v.getTag();
-            timer.setText(buttons.get(index).getText());
+            while(i<BUTTON_IDS.length && !found) {
+                if (BUTTON_IDS[i] == v.getId()) {
+                    found = true;
+                } else {
+                    i++;
+                }
+            }
+            if(i < BUTTON_IDS.length) {
+                String text = timer.getText().toString();
+                if (text.matches("")) {
+                    timer.setText(buttons.get(i).getText());
+                } else {
+                    if (text.charAt(text.length() - 1) == '+') {
+                        timer.setText(text + buttons.get(i).getText());
+                    } else {
+                        timer.setText(text + '+' + buttons.get(i).getText());
+                    }
+                }
+            }
         }
     }
 }

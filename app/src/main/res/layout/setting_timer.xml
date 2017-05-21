@@ -20,11 +20,12 @@
 
     <EditText
         android:id="@+id/timer"
+        android:digits="1234567890.+"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/enter_timer_string"
-        android:inputType="numberSigned" />
+        android:inputType="numberSigned|numberDecimal" />
 
     <TableLayout
         android:layout_width="match_parent"
