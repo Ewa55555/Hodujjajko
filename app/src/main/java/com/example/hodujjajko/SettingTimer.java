@@ -14,6 +14,7 @@ import java.util.List;
 public class SettingTimer extends Activity implements View.OnClickListener{
 
     private EditText timer;
+    private Button startTimer;
     private List<Button> buttons;
     private static final int[] BUTTON_IDS = {
         R.id.timer1,
@@ -24,7 +25,7 @@ public class SettingTimer extends Activity implements View.OnClickListener{
         R.id.timer6,
         R.id.timer7,
         R.id.timer8};
-    private Button startTimer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
