@@ -38,7 +38,7 @@ public class SettingTimer extends Activity implements View.OnClickListener{
         int i = 0;
         timer = (EditText) findViewById(R.id.timer);
         timer.setOnClickListener(this);
-        startTimer = (Button)findViewById(R.id.startTimer);
+        startTimer = (Button)findViewById(R.id.start_timer);
         startTimer.setOnClickListener(this);
         buttons = new ArrayList<>(BUTTON_IDS.length);
         for(int id : BUTTON_IDS) {
@@ -52,7 +52,7 @@ public class SettingTimer extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.startTimer){
+        if (v.getId() == R.id.start_timer){
             Log.i("Jajko", "alo");
         }else{
             Log.i("Jajko", "znalazlam buttona");
