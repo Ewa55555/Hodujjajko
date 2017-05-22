@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textViewTime"
+        android:id="@+id/queue2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/queue3"
+        android:layout_marginTop="141dp"
+        android:layout_weight="0.01"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <TextView
         android:id="@+id/queue1"
@@ -21,18 +24,14 @@
         android:layout_marginTop="184dp"
         android:layout_weight="0.09"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <TextView
-        android:id="@+id/queue2"
+        android:id="@+id/textViewTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/queue3"
-        android:layout_marginTop="141dp"
-        android:layout_weight="0.08"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <TextView
         android:id="@+id/queue3"
@@ -42,5 +41,5 @@
         android:layout_alignStart="@+id/queue1"
         android:layout_marginBottom="55dp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 </LinearLayout>
