@@ -2,6 +2,7 @@ package com.example.hodujjajko;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -21,6 +22,7 @@ public class RunTimer extends Activity implements View.OnClickListener{
     private TextView queue1;
     private TextView queue2;
     private TextView queue3;
+    private String text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +39,13 @@ public class RunTimer extends Activity implements View.OnClickListener{
         queue3 = (TextView)findViewById(R.id.queue3);
 
         TimersBuildingClass buildingClass = new TimersBuildingClass();
-        buildingClass.build("1+1+1+1");
+        Log.i("RunTimer", "w inicie text "+getIntent().getStringExtra("text"));
+        buildingClass.build(""+getIntent().getExtras().getString("text"));
         buildingClass.set();
         buildingClass.start();
         Log.i("RunTimer", "zastartowalo wszytsko");
     }
+
 
     public class TimersBuildingClass {
         List<Timer> timers;

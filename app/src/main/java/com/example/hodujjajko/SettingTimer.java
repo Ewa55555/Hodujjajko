@@ -55,10 +55,16 @@ public class SettingTimer extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         int i = 0;
         boolean found = false;
+        Log.i("SettingTimer", "Jestemy w on click");
         if (v.getId() == R.id.startTimer){
             Intent timerIntent = null;
+            Log.i("SettingTimer", "przed intentem");
             timerIntent = new Intent(getApplicationContext(), RunTimer.class);
+            Log.i("SettingTimer","tworzymy intent i extras" +timer.getText());
+            timerIntent.putExtra("text", timer.getText().toString());
+            Log.i("SettingTimer","zaraz bedziemy wlaczac runTimer");
             startActivity(timerIntent);
+
         }else{
             while(i<BUTTON_IDS.length && !found) {
                 if (BUTTON_IDS[i] == v.getId()) {
