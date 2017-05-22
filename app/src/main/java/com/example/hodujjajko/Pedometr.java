@@ -13,18 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Pedometr extends Activity implements SensorEventListener {
-    private TextView counter;
+
     private SensorManager sensorManager;
-    private Sensor stepCounter;
-    private Sensor stepDetector;
+    private TextView count;
     boolean activityRunning;
 
-
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pedometr);
-        counter = (TextView) findViewById(R.id.conterTextView);
-        Log.i("Pedometr","jestem w create");
+        count = (TextView) findViewById(R.id.pedometr);
         PackageManager pm = getPackageManager();
         if (pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)) {
             Log.i("Pedometr","czujnik jest widoczny");
@@ -33,42 +31,38 @@ public class Pedometr extends Activity implements SensorEventListener {
         }
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-        stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        stepDetector = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
     }
+
     @Override
     protected void onResume() {
-
         super.onResume();
         activityRunning = true;
-        if (stepCounter != null) {
-            sensorManager.registerListener(this,stepCounter, SensorManager.SENSOR_DELAY_FASTEST);
-            sensorManager.registerListener(this,stepDetector, SensorManager.SENSOR_DELAY_FASTEST);
+        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        if (countSensor != null) {
+            sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
         } else {
             Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
         }
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         activityRunning = false;
+        // if you unregister the last listener, the hardware will stop detecting step events
+//        sensorManager.unregisterListener(this);
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (activityRunning) {
-            counter.setText(String.valueOf(event.values[0]));
+            count.setText(String.valueOf(event.values[0]));
         }
+
     }
-    protected void onStop() {
-        super.onStop();
-        sensorManager.unregisterListener(this, stepCounter);
-        sensorManager.unregisterListener(this, stepDetector);
-    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 }
