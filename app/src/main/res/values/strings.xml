@@ -19,6 +19,13 @@
     <string name="pedometr_string">Krokomierz</string>
     <string name="reset_string">Resetuj</string>
     <string name="empty_timer_string">Pusty string</string>
+    <string name="see_schedule_string">Zobacz grafik</string>
+    <string name="create_schedule_string">Dodaj do grafiku</string>
+    <string name="schedule_name_string">Nazwa</string>
+    <string name="per_week_string">Co tydzień</string>
+    <string name="once_string">Jednorazowo</string>
+    <string name="start_time_string">Czas rozpoczęcia</string>
+    <string name="end_time_string">Czas zakończenia</string>
     <string name="step_counter">android.hardware.sensor.stepcounter</string>
     <string name="step_detector">android.hardware.sensor.stepdetector</string>
 </resources>

@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(view.getId()) {
             case R.id.RearEgg:
                 startSettingActivity();
+                break;
+            case R.id.Schedule:
+                startSchedule();
+                break;
         }
     }
 
@@ -40,5 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent settingActivityIntent = null;
         settingActivityIntent = new Intent(getApplicationContext(), SettingActivity.class);
         startActivity(settingActivityIntent);
+    }
+
+    private void startSchedule(){
+        Intent scheduleIntent = null;
+        scheduleIntent = new Intent(getApplicationContext(), Schedule.class);
+        startActivity(scheduleIntent);
     }
 }
