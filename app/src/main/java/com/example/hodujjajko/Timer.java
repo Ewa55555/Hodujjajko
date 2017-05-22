@@ -9,13 +9,19 @@ import android.widget.TextView;
 import java.util.concurrent.TimeUnit;
 
 public class Timer extends CountDownTimer {
-    TextView textView;
-    long millis;
+    private TextView textView;
+    private long millis;
+    private Observer observer;
+
 
     public Timer(long millisInFuture, long countDownInterval, TextView textView) {
         super(millisInFuture, countDownInterval);
         millis = millisInFuture;
         this.textView = textView;
+    }
+
+    public void setObserver(Observer observer){
+        this.observer = observer;
     }
 
     public String convertTime(){
@@ -36,15 +42,9 @@ public class Timer extends CountDownTimer {
 
     @Override
     public void onFinish() {
-        //playSound();
-        textView.setText("End");
+        observer.update();
     }
 
-//    private void playSound() {
-//        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-//        r.play();
-//
-//    }
+
 }
 

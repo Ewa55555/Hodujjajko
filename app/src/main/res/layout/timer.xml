@@ -7,13 +7,13 @@
     <TextView
         android:id="@+id/textViewTime"
         android:layout_width="match_parent"
-        android:layout_height="47dp"
+        android:layout_height="wrap_content"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
         android:id="@+id/queue1"
-        android:layout_width="336dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/queue2"
@@ -25,18 +25,18 @@
 
     <TextView
         android:id="@+id/queue2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/queue3"
         android:layout_marginTop="141dp"
+        android:layout_weight="0.08"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:layout_weight="0.08" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
         android:id="@+id/queue3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/queue1"
         android:layout_alignStart="@+id/queue1"
