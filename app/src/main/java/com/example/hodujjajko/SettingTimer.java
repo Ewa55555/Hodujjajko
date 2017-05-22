@@ -57,7 +57,7 @@ public class SettingTimer extends Activity implements View.OnClickListener{
         boolean found = false;
         if (v.getId() == R.id.startTimer){
             Intent timerIntent = null;
-            timerIntent = new Intent(getApplicationContext(), Timer.class);
+            timerIntent = new Intent(getApplicationContext(), RunTimer.class);
             startActivity(timerIntent);
         }else{
             while(i<BUTTON_IDS.length && !found) {

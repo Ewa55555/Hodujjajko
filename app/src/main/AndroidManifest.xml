@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hodujjajko">
+    <uses-feature
+        android:name="@string/step_detector" android:required="false"/>
 
+    <uses-feature
+        android:name="@string/step_counter" android:required="false"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -30,7 +35,7 @@
             android:label="Pedometr" >
         </activity>
         <activity
-            android:name=".Timer"
+            android:name=".RunTimer"
             android:label="Timer" >
         </activity>
     </application>

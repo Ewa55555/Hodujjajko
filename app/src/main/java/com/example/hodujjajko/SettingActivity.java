@@ -13,6 +13,7 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     private Button study;
     private Button training;
     private Button running;
+    private Button pedometr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,8 @@ public class SettingActivity extends Activity implements View.OnClickListener{
         training.setOnClickListener(this);
         running = (Button)findViewById(R.id.running);
         running.setOnClickListener(this);
+        pedometr = (Button)findViewById(R.id.pedometr);
+        pedometr.setOnClickListener(this);
     }
 
     @Override
@@ -36,6 +39,10 @@ public class SettingActivity extends Activity implements View.OnClickListener{
             case R.id.study:
                 Log.i("Jajko", "startujemy setting timer");
                 startSettingTimer();
+                break;
+            case R.id.pedometr:
+                startPedometr();
+                break;
         }
     }
 
@@ -43,5 +50,11 @@ public class SettingActivity extends Activity implements View.OnClickListener{
         Intent settingTimerIntent = null;
         settingTimerIntent = new Intent(getApplicationContext(), SettingTimer.class);
         startActivity(settingTimerIntent);
+    }
+
+    private void startPedometr(){
+        Intent pedometrIntent = null;
+        pedometrIntent = new Intent(getApplicationContext(), Pedometr.class);
+        startActivity(pedometrIntent);
     }
 }

@@ -20,4 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/running_string" />
+
+    <Button
+        android:id="@+id/pedometr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pedometr_string" />
 </LinearLayout>
