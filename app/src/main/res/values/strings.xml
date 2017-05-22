@@ -17,6 +17,8 @@
     <string name="your_activity_string">Twoja aktywność</string>
     <string name="schedule_string">Twój grafik</string>
     <string name="pedometr_string">Krokomierz</string>
+    <string name="reset_string">Resetuj</string>
+    <string name="empty_timer_string">Pusty string</string>
     <string name="step_counter">android.hardware.sensor.stepcounter</string>
     <string name="step_detector">android.hardware.sensor.stepdetector</string>
 </resources>

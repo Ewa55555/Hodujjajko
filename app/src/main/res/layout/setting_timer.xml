@@ -7,7 +7,8 @@
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
 
     <TextView
@@ -26,6 +27,12 @@
         android:ems="10"
         android:hint="@string/enter_timer_string"
         android:inputType="numberSigned|numberDecimal" />
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reset_string" />
 
     <TableLayout
         android:layout_width="match_parent"
