@@ -30,13 +30,14 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.createSchedule:
+                creatingScheduleActivity();
                 break;
             case R.id.seeSchedule:
                 break;
         }
     }
 
-    private void startSettingActivity(){
+    private void creatingScheduleActivity(){
         Intent creatingScheduleIntent = null;
         creatingScheduleIntent = new Intent(getApplicationContext(), CreatingSchedule.class);
         startActivity(creatingScheduleIntent);

@@ -26,6 +26,14 @@
     <string name="once_string">Jednorazowo</string>
     <string name="start_time_string">Czas rozpoczęcia</string>
     <string name="end_time_string">Czas zakończenia</string>
+    <string name="choose_day_string">Wybierz dzień</string>
+    <string name="monday">Poniedziałek</string>
+    <string name="tuesday">Wtorek</string>
+    <string name="wednesday">Środa</string>
+    <string name="thursday">Czwartek</string>
+    <string name="friday">Piątek</string>
+    <string name="saturday">Sobota</string>
+    <string name="sunday">Niedziela</string>
     <string name="step_counter">android.hardware.sensor.stepcounter</string>
     <string name="step_detector">android.hardware.sensor.stepdetector</string>
 </resources>

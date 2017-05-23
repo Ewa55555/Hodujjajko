@@ -39,6 +39,14 @@
             android:name=".RunTimer"
             android:label="Timer" >
         </activity>
+        <activity
+            android:name=".Schedule"
+            android:label="Schedule" >
+        </activity>
+        <activity
+            android:name=".CreatingSchedule"
+            android:label="Tworzenie grafiku" >
+        </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
