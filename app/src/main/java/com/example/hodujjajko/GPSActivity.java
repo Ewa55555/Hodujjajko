@@ -1,6 +1,7 @@
 package com.example.hodujjajko;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -13,6 +14,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
  * Created by Kasia on 2017-05-23.
@@ -53,9 +56,13 @@ public class GPSActivity extends FragmentActivity implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(latitude, longitude))
-                .title("Marker"));
+        Polyline line = googleMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(50.004274, 19.883685), new LatLng(50.015224, 19.889263))
+                .width(5)
+                .color(Color.RED));
+//        googleMap.addMarker(new MarkerOptions()
+//                .position(new LatLng(latitude, longitude))
+//                .title("Marker"));
     }
 }
 
