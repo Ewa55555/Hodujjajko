@@ -1,0 +1,70 @@
+package com.example.hodujjajko;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+/**
+ * Created by Kasia on 2017-05-23.
+ */
+
+public class GPSActivity extends FragmentActivity implements OnMapReadyCallback{
+
+        Button btnShowLocation;
+        // GPSTracker class
+        GPSTracker gps;
+        double longitude;
+        double latitude;
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.running);
+            btnShowLocation = (Button) findViewById(R.id.button);
+            MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+
+            btnShowLocation.setOnClickListener(new View.OnClickListener() {
+
+        @Override
+        public void onClick(View arg0) {
+            Log.i("GA","jestem w on click");
+            gps = new GPSTracker(GPSActivity.this);
+
+            // check if GPS enabled
+            if(gps.canGetLocation()){
+
+                latitude = gps.getLatitude();
+                longitude = gps.getLongitude();
+
+                // \n is for new line
+                Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            }else{
+                // can't get location
+                // GPS or Network is not enabled
+                // Ask user to enable GPS/network in settings
+                gps.showSettingsAlert();
+            }
+
+        }
+    });
+        }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latitude, longitude))
+                .title("Marker"));
+    }
+}
+

@@ -50,8 +50,7 @@ public class Pedometr extends Activity implements SensorEventListener {
     protected void onPause() {
         super.onPause();
         activityRunning = false;
-        // if you unregister the last listener, the hardware will stop detecting step events
-//        sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener(this);
     }
 
     @Override

@@ -43,6 +43,9 @@ public class SettingActivity extends Activity implements View.OnClickListener{
             case R.id.pedometr:
                 startPedometr();
                 break;
+            case R.id.running:
+                startRunning();
+                break;
         }
     }
 
@@ -56,5 +59,10 @@ public class SettingActivity extends Activity implements View.OnClickListener{
         Intent pedometrIntent = null;
         pedometrIntent = new Intent(getApplicationContext(), Pedometr.class);
         startActivity(pedometrIntent);
+    }
+    private void startRunning(){
+        Intent runningIntent = null;
+        runningIntent = new Intent(getApplicationContext(), GPSActivity.class);
+        startActivity(runningIntent);
     }
 }
