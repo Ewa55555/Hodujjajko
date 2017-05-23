@@ -20,7 +20,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GPSActivity extends FragmentActivity implements OnMapReadyCallback{
 
-        Button btnShowLocation;
         // GPSTracker class
         GPSTracker gps;
         double longitude;
@@ -30,14 +29,8 @@ public class GPSActivity extends FragmentActivity implements OnMapReadyCallback{
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.running);
-            btnShowLocation = (Button) findViewById(R.id.button);
             MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
-
-            btnShowLocation.setOnClickListener(new View.OnClickListener() {
-
-        @Override
-        public void onClick(View arg0) {
             Log.i("GA","jestem w on click");
             gps = new GPSTracker(GPSActivity.this);
 
@@ -56,8 +49,6 @@ public class GPSActivity extends FragmentActivity implements OnMapReadyCallback{
                 gps.showSettingsAlert();
             }
 
-        }
-    });
         }
 
     @Override
