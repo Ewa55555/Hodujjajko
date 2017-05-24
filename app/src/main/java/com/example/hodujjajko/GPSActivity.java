@@ -17,6 +17,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.List;
+
 /**
  * Created by Kasia on 2017-05-23.
  */
@@ -27,6 +29,7 @@ public class GPSActivity extends FragmentActivity implements OnMapReadyCallback{
         GPSTracker gps;
         double longitude;
         double latitude;
+    LocationDAO locationDAO;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,22 @@ public class GPSActivity extends FragmentActivity implements OnMapReadyCallback{
             mapFragment.getMapAsync(this);
             Log.i("GA","jestem w on click");
             gps = new GPSTracker(GPSActivity.this);
+            locationDAO = new LocationDAO(getApplicationContext());
 
             // check if GPS enabled
             if(gps.canGetLocation()){
 
                 latitude = gps.getLatitude();
                 longitude = gps.getLongitude();
+                locationDAO.open();
+                Log.i("","sciezka "+ getApplicationContext().getDatabasePath(DatabaseHelper.DATABASE_NAME).toString());
+                locationDAO.addLocation(new Location(longitude, latitude));
+                List<Location> loc = locationDAO.fetchAllData();
+                for(Location e:loc)
+                {
+                    Log.i("","long"+e.longitude);
+                }
+                locationDAO.close();
 
                 // \n is for new line
                 Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();

@@ -83,7 +83,7 @@ public class TrainingDao implements ITrainingDAO{
     private Training cursorToTraining (Cursor cursor) {
         //format daty ?
         Training training= new Training();
-        training.id = cursor.getLong(0);
+        training.id = cursor.getInt(0);
         training.typeOfTraining = cursor.getString(1);
         training.start = cursor.getString(2);
         training.finish = cursor.getString(3);
@@ -95,7 +95,7 @@ public class TrainingDao implements ITrainingDAO{
     }
 
     private void setContentValue(Training training) {
-        initialValues.put(DatabaseHelper.COLUMN_TYPE_OF_TRAINING, training.id);
+        initialValues.put(DatabaseHelper.COLUMN_TYPE_OF_TRAINING, training.typeOfTraining);
         initialValues.put(DatabaseHelper.COLUMN_START, training.start);
         initialValues.put(DatabaseHelper.COLUMN_FINISH, training.finish);
         initialValues.put(DatabaseHelper.COLUMN_DURATION, training.duration);

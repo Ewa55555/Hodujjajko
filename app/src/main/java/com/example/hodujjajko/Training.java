@@ -7,7 +7,7 @@ import java.util.Date;
  */
 
 public class Training {
-    public long id;
+    public int id;
     public String typeOfTraining;
     public String start;
     public String finish;

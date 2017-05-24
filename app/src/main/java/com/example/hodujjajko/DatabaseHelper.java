@@ -15,11 +15,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_POINTS="points";
     public static final String COLUMN_DURATION="duration";
     public static final String COLUMN_IS_DONE="isDone";
+    public static final String TABLE_LOCATION="location";
+    public static final String COLUMN_ID_LOCATION="_id";
+    public static final String COLUMN_LONGITUDE="longitude";
+    public static final String COLUMN_LATITUDE="latitude";
 
-    private static final String DATABASE_CREATE = "create table " + TABLE_TRAINING + "("+ COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_TYPE_OF_TRAINING +"varchar(20), "
-            + COLUMN_START + "datetime," + COLUMN_FINISH + "datetime," + COLUMN_POINTS + "integer,"
-            + COLUMN_DURATION + "integer ," + COLUMN_IS_DONE + " boolean;";
+
+    private static final String CREATE_TRAINIG = "create table " + TABLE_TRAINING + "("+ COLUMN_ID
+            + " integer primary key autoincrement, " + COLUMN_TYPE_OF_TRAINING +"text, "
+            + COLUMN_START + "text," + COLUMN_FINISH + "text," + COLUMN_POINTS + "integer,"
+            + COLUMN_DURATION + "integer ," + COLUMN_IS_DONE + " boolean);";
+    private static final String CREATE_LOCATION = "create table " + TABLE_LOCATION + "("+ COLUMN_ID_LOCATION
+            + " integer primary key autoincrement, " + COLUMN_LONGITUDE + " real," + COLUMN_LATITUDE +" real);";
 
     private static final int DATABASE_VERSION =1;
 
@@ -42,7 +49,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE);
+        db.execSQL(CREATE_TRAINIG);
+        db.execSQL(CREATE_LOCATION);
     }
 
     @Override
