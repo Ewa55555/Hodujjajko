@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,8 +31,11 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     private Button chooseDay;
     private Button chooseDate;
     private RadioGroup frequencyRadioGroup;
-    private RadioButton frequencyPerWeek;
-    private RadioButton frequencyOnce;
+    private TextView startTimeView;
+    private TextView endTimeView;
+    private TextView frequencyView;
+    private static TextView dayView;
+    private Button saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,11 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     private void init(){
         scheduleName = (EditText) findViewById(R.id.scheduleName);
         scheduleName.setOnClickListener(this);
+        startTimeView = (TextView) findViewById(R.id.startTimeView);
+        endTimeView = (TextView) findViewById(R.id.endTimeView);
+        frequencyView = (TextView) findViewById(R.id.frequencyView);
+        dayView = (TextView) findViewById(R.id.dayView);
+        saveButton = (Button) findViewById(R.id.save);
 
         chooseDate = (Button) findViewById(R.id.chooseDate);
         chooseDay = (Button) findViewById(R.id.chooseDay);
@@ -49,15 +59,13 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         chooseDate.setEnabled(false);
 
         frequencyRadioGroup = (RadioGroup) findViewById(R.id.frequency);
-        frequencyOnce = (RadioButton) findViewById(R.id.once);
-        frequencyPerWeek = (RadioButton) findViewById(R.id.perWeek);
 
         startTime = (Button) findViewById(R.id.startTime);
         startTime.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                showTimePickerDialog();
+                showTimePickerDialog(R.id.startTimeView);
             }
         });
         endTime = (Button) findViewById(R.id.endTime);
@@ -65,7 +73,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onClick(View v) {
-                showTimePickerDialog();
+                showTimePickerDialog(R.id.endTimeView);
             }
         });
         chooseDate.setOnClickListener(new View.OnClickListener(){
@@ -81,12 +89,17 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                 if (checkedId == R.id.once) {
                     chooseDay.setEnabled(false);
                     chooseDate.setEnabled(true);
+                    frequencyView.setText(getString(R.string.once_string));
+                    dayView.setText("");
                 } else if (checkedId == R.id.perWeek) {
                     chooseDay.setEnabled(true);
                     chooseDate.setEnabled(false);
+                    frequencyView.setText(getString(R.string.per_week_string));
+                    dayView.setText("");
                 }
             }
         });
+
         chooseDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,10 +107,26 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        saveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (startTimeView.getText().equals("") || endTimeView.getText().equals("") ||
+                        frequencyView.getText().equals("") || dayView.getText().equals("") ||
+                        scheduleName.getText().equals("")){
+                    Log.i("CreatingSchedule", "puste");
+                    Toast.makeText(getApplicationContext(), getString(R.string.blank_string), Toast.LENGTH_LONG).show();
+                }else{
+                    Log.i("CreatingSchedule", "niepuste");
+                    //zapisz w bazie
+                }
+            }
+        });
+
     }
 
     public static class TimePickerFragment extends DialogFragment implements
             TimePickerDialog.OnTimeSetListener {
+
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -113,13 +142,18 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
 
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//            setTimeString(hourOfDay, minute, 0);
-//
-//            timeView.setText(timeString);
+            Bundle bundle = getArguments();
+            int id = bundle.getInt("textViewId");
+            Log.i("CreatingSchedule", "id w onTimeSet "+ id);
+            ((TextView)getActivity().findViewById(id)).setText(setTimeString(hourOfDay, minute));
         }
     }
-    private void showTimePickerDialog() {
+    private void showTimePickerDialog(int textViewId) {
         DialogFragment newFragment = new TimePickerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("textViewId", textViewId);
+        Log.i("CreatingSchedule", "id w showTimePicker "+ textViewId);
+        newFragment.setArguments(bundle);
         newFragment.show(getFragmentManager(), "timePicker");
     }
 
@@ -143,6 +177,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
+            dayView.setText(setDateString(year, month, dayOfMonth));
         }
     }
 
@@ -172,8 +207,25 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                 rg.addView(rb);
             }
 
+            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    int numberOfRadioButtons = group.getChildCount();
+                    for (int i = 0; i < numberOfRadioButtons; i++) {
+                        RadioButton button = (RadioButton) group.getChildAt(i);
+                        if (button.getId() == checkedId) {
+                            dayView.setText(button.getText().toString());
+                            dismiss();
+
+                        }
+                    }
+                }
+            });
+
             return dialog;
         }
+
 
     }
 
@@ -186,6 +238,35 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     private void showDayPickerDialog(){
         DialogFragment newFragment = new DayPickerFragment();
         newFragment.show(getFragmentManager(), "dayPicker");
+    }
+
+    private static String setTimeString(int hourOfDay, int minute) {
+        String hour = "" + hourOfDay;
+        String min = "" + minute;
+
+        if (hourOfDay < 10)
+            hour = "0" + hourOfDay;
+        if (minute < 10)
+            min = "0" + minute;
+
+        String timeString = hour + ":" + min + ":00";
+        return timeString;
+    }
+
+    private static String setDateString(int year, int monthOfYear, int dayOfMonth) {
+
+        // Increment monthOfYear for Calendar/Date -> Time Format setting
+        monthOfYear++;
+        String mon = "" + monthOfYear;
+        String day = "" + dayOfMonth;
+
+        if (monthOfYear < 10)
+            mon = "0" + monthOfYear;
+        if (dayOfMonth < 10)
+            day = "0" + dayOfMonth;
+
+        String dateString = day + "." + mon + "." + year;
+        return dateString;
     }
 
     @Override
