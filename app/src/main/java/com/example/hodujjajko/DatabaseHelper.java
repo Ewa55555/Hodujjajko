@@ -19,14 +19,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID_LOCATION="_id";
     public static final String COLUMN_LONGITUDE="longitude";
     public static final String COLUMN_LATITUDE="latitude";
+    public static final String TABLE_PLAN="plan";
+    public static final String COLUMN_ID_PLAN="_id";
+    public static final String COLUMN_DAY_PLAN="day";
+    public static final String COLUMN_TIME_PLAN="time";
+    public static final String COLUMN_DAY_OF_WEEK_PLAN="dayOfWeek";
+    public static final String COLUMN_IS_ONCE="isOnce";
+    public static final String COLUMN_NAME_PLAN="name";
+
 
 
     private static final String CREATE_TRAINIG = "create table " + TABLE_TRAINING + "("+ COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_TYPE_OF_TRAINING +"text, "
-            + COLUMN_START + "text," + COLUMN_FINISH + "text," + COLUMN_POINTS + "integer,"
-            + COLUMN_DURATION + "integer ," + COLUMN_IS_DONE + " boolean);";
+            + " integer primary key autoincrement, " + COLUMN_TYPE_OF_TRAINING +" text, "
+            + COLUMN_START + " text, " + COLUMN_FINISH + " text, " + COLUMN_POINTS + " integer, "
+            + COLUMN_DURATION + " integer ," + COLUMN_IS_DONE + " integer);";
+
     private static final String CREATE_LOCATION = "create table " + TABLE_LOCATION + "("+ COLUMN_ID_LOCATION
             + " integer primary key autoincrement, " + COLUMN_LONGITUDE + " real," + COLUMN_LATITUDE +" real);";
+
+    private static final String CREATE_PLAN = "create table " + TABLE_PLAN + "("+ COLUMN_ID_PLAN
+            + " integer primary key autoincrement, " +COLUMN_NAME_PLAN + " text, " + COLUMN_DAY_PLAN +" text, "
+            + COLUMN_TIME_PLAN + " text, " + COLUMN_DAY_OF_WEEK_PLAN + " text, " + COLUMN_IS_ONCE+ " integer);";
 
     private static final int DATABASE_VERSION =1;
 
@@ -51,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TRAINIG);
         db.execSQL(CREATE_LOCATION);
+        db.execSQL(CREATE_PLAN);
     }
 
     @Override
