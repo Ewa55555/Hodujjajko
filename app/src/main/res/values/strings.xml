@@ -35,6 +35,8 @@
     <string name="saturday">Sobota</string>
     <string name="sunday">Niedziela</string>
     <string name="save_string">Zapisz</string>
+    <string name="start_string">Start</string>
+    <string name="stop_string">Stop</string>
     <string name="blank_string">Wszystkie pola muszą być wypełnione</string>
     <string name="step_counter">android.hardware.sensor.stepcounter</string>
     <string name="step_detector">android.hardware.sensor.stepdetector</string>

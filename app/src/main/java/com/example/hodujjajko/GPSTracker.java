@@ -20,10 +20,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.TextView;
 
-/**
- * Created by Kasia on 2017-05-23.
- */
 
 public class GPSTracker extends Service implements LocationListener {
     private final Context context;
@@ -35,12 +33,17 @@ public class GPSTracker extends Service implements LocationListener {
     double longitude;
     public LocationManager locationManager;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 2; // 10 meters
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 30; // 1 minute
     private int  MY_PERMISSIONS_CODE;
-    public GPSTracker(Context context)
+    LocationDAO locationDAO;
+    TextView textView;
+    public GPSTracker(Context context, TextView textView)
     {
         this.context = context;
+        locationDAO = new LocationDAO(context);
+        this.textView = textView;
         getLocation();
+
     }
     public Location getLocation()
     {
@@ -77,6 +80,7 @@ public class GPSTracker extends Service implements LocationListener {
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                                Log.i("GPS","ustawiam na poczatku "+latitude+" "+longitude);
                             }
                         }
                     }
@@ -110,6 +114,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     public void stopUsingGPS(){
         if(locationManager != null){
+            Log.i("GPS","huuurej");
             locationManager.removeUpdates(GPSTracker.this);
         }
     }
@@ -178,9 +183,21 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        double oldLatitude = latitude;
+        double oldLongitude = longitude;
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        Log.i("GPS","location"+longitude+" "+latitude);
+        float[] results = new float[1];
+        results[0] = 0;
+        Location.distanceBetween(oldLatitude, oldLongitude,
+                latitude, longitude, results);
+        Log.i("GPS", "distans "+results[0]);
+        Float distance = Float.parseFloat(textView.getText().toString()) + results[0];
+        textView.setText(distance.toString());
+        locationDAO.open();
+        locationDAO.addLocation(new com.example.hodujjajko.Location(longitude, latitude));
+        locationDAO.close();
+        Log.i("GPS","old" + oldLongitude+" "+oldLatitude+" location"+longitude+" "+latitude);
     }
 
     @Override
