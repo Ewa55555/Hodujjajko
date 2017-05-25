@@ -21,20 +21,5 @@
         android:layout_height="wrap_content"
         android:text="0" />
 
-    <TextView
-        android:id="@+id/timeRunning"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
 
 </LinearLayout>
