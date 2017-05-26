@@ -71,6 +71,7 @@ public class GPSActivity extends Activity {
         startTime = System.currentTimeMillis();
         locationDAO.open();
         locationDAO.deleteAll();
+        locationDAO.close();
         gps = new GPSTracker(GPSActivity.this, distance);
         if (gps.canGetLocation()) {
             latitude = gps.getLatitude();

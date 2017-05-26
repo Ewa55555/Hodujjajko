@@ -22,7 +22,7 @@ public class Pedometr extends Activity implements SensorEventListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pedometr);
-        count = (TextView) findViewById(R.id.pedometr);
+        count = (TextView) findViewById(R.id.conterTextView);
         PackageManager pm = getPackageManager();
         if (pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)) {
             Log.i("Pedometr","czujnik jest widoczny");

@@ -4,9 +4,11 @@ package com.example.hodujjajko;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,12 +41,16 @@ public class RunningEnd extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         locationDAO.open();
         List<Location> locations = locationDAO.fetchAllData();
+       // googleMap.animateCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(locations.get(0).longitude,
+         //       locations.get(0).latitude), 17.0f ) );
+
         PolylineOptions polylineOptions = new PolylineOptions();
         for (int i = 0; i < locations.size() - 1; i++) {
+            Log.i("RunningEnd", locations.get(i).longitude+" "+locations.get(i).latitude);
             polylineOptions.add(new LatLng(locations.get(i).longitude, locations.get(i).latitude),
                     new LatLng(locations.get(i + 1).longitude, locations.get(i + 1).latitude));
         }
-        polylineOptions.width(5).color(Color.RED);
+        polylineOptions.width(1000).color(Color.RED);
         Polyline line = googleMap.addPolyline(polylineOptions);
         locationDAO.close();
     }

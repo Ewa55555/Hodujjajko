@@ -172,6 +172,7 @@ public class GPSTracker extends Service implements LocationListener {
 
         // Showing Alert Message
         alertDialog.show();
+
     }
 
 
