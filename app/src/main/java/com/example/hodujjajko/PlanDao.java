@@ -87,7 +87,9 @@ public class PlanDao implements IPlanDAO {
         plan.name = cursor.getString(1);
         plan.time = cursor.getString(2);
         plan.dayOfWeek = cursor.getString(3);
-        plan.isOnce = Boolean.parseBoolean(cursor.getString(4));
+        plan.isOnce = (cursor.getInt(4)!= 0);
+        Log.i("Shce","isOnce po wyciagnieciu"+plan.isOnce);
+        //plan.isOnce = Boolean.parseBoolean(String.valueOf(cursor.getInt(4)));
         return plan;
     }
 
@@ -96,7 +98,12 @@ public class PlanDao implements IPlanDAO {
         initialValues.put(DatabaseHelper.COLUMN_DAY_PLAN, plan.day);
         initialValues.put(DatabaseHelper.COLUMN_TIME_PLAN, plan.time);
         initialValues.put(DatabaseHelper.COLUMN_DAY_OF_WEEK_PLAN, plan.dayOfWeek);
-        initialValues.put(DatabaseHelper.COLUMN_IS_ONCE, plan.isOnce);
+        if(plan.isOnce == true) {
+            Log.i("Sch", "ustawiam true");
+            initialValues.put(DatabaseHelper.COLUMN_IS_ONCE, 1);
+        }
+        else
+            initialValues.put(DatabaseHelper.COLUMN_IS_ONCE, 0);
 
 
     }

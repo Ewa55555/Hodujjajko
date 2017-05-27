@@ -37,6 +37,9 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     private static TextView dayView;
     private Button saveButton;
 
+    private PlanDao plan;
+    private int regularity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         frequencyView = (TextView) findViewById(R.id.frequencyView);
         dayView = (TextView) findViewById(R.id.dayView);
         saveButton = (Button) findViewById(R.id.save);
+        plan = new PlanDao(getApplicationContext());
 
         chooseDate = (Button) findViewById(R.id.chooseDate);
         chooseDay = (Button) findViewById(R.id.chooseDay);
@@ -87,11 +91,13 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
                 if (checkedId == R.id.once) {
+                    regularity=0;
                     chooseDay.setEnabled(false);
                     chooseDate.setEnabled(true);
                     frequencyView.setText(getString(R.string.once_string));
                     dayView.setText("");
                 } else if (checkedId == R.id.perWeek) {
+                    regularity=1;
                     chooseDay.setEnabled(true);
                     chooseDate.setEnabled(false);
                     frequencyView.setText(getString(R.string.per_week_string));
@@ -115,10 +121,11 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                         scheduleName.getText().equals("")){
                     Log.i("CreatingSchedule", "puste");
                     Toast.makeText(getApplicationContext(), getString(R.string.blank_string), Toast.LENGTH_LONG).show();
-                }else{
-                    Log.i("CreatingSchedule", "niepuste");
-                    //zapisz w bazie
+                }else {
+                    addToDatabase();
                 }
+
+
             }
         });
 
@@ -272,5 +279,37 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
+
     }
-}
+
+    public void addToDatabase()
+    {
+        Plan planData = new Plan();
+        if (regularity==0)
+        {
+            Log.i("SCHe","jestem");
+            planData.isOnce = true;
+            Log.i("SCHe","wartosc isOnce"+planData.isOnce);
+        }
+        else
+        {
+            planData.isOnce = false;
+
+        }
+
+        planData.time = startTimeView.getText().toString();
+        planData.name = scheduleName.getText().toString();
+        planData.day = dayView.getText().toString();
+        Log.i("Sche","naaazwa"+scheduleName.getText().toString());
+
+        plan.open();
+        plan.addPlan(planData);
+        List<Plan> p = plan.fetchAllData();
+        for(Plan e : p)
+        {
+            Log.i("Sche","wynik z bazy   "+e.name+" "+  e.isOnce+ " " + e.day + " " + e.time);
+        }
+
+    }
+    }
+

@@ -5,12 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button rearEgg;
     private Button yourActivity;
     private Button schedule;
+    private ImageView image;
+    private Button gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +27,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rearEgg.setOnClickListener(this);
         yourActivity = (Button)findViewById(R.id.YourActivity);
         yourActivity.setOnClickListener(this);
+        image = (ImageView) findViewById(R.id.imageView);
+        yourActivity.setOnClickListener(this);
         schedule = (Button)findViewById(R.id.Schedule);
         schedule.setOnClickListener(this);
+        gallery = (Button)findViewById(R.id.Gallery);
+        gallery.setOnClickListener(this);
     }
 
     @Override

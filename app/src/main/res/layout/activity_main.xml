@@ -10,14 +10,17 @@
         android:layout_width="368dp"
         android:layout_height="495dp"
         android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:weightSum="1">
 
         <Button
             android:id="@+id/RearEgg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name" />
+            android:text="@string/app_name"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <Button
             android:id="@+id/YourActivity"
@@ -30,5 +33,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/schedule_string" />
+
+        <Button
+            android:id="@+id/Gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Galeria zdjęć"
+            tools:text="Galeria zdjęć" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05"
+            app:srcCompat="@drawable/jajka" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
