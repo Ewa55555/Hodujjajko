@@ -42,6 +42,7 @@ public class GPSActivity extends Activity {
         distance = (TextView) findViewById(R.id.distance);
 
         stopRunning = (Button) findViewById(R.id.stopRunning);
+        stopRunning.setEnabled(false);
         stopRunning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +69,8 @@ public class GPSActivity extends Activity {
     }
 
     private void start() {
+        startRunning.setEnabled(false);
+        stopRunning.setEnabled(true);
         startTime = System.currentTimeMillis();
         locationDAO.open();
         locationDAO.deleteAll();

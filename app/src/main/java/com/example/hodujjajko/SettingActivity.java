@@ -63,6 +63,7 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     private void startRunning(){
         Intent runningIntent = null;
         runningIntent = new Intent(getApplicationContext(), GPSActivity.class);
+        Log.i("settingactivity", "kliklam startRunning");
         startActivity(runningIntent);
     }
 }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
 public class RunTimer extends Activity implements View.OnClickListener{
@@ -29,13 +30,28 @@ public class RunTimer extends Activity implements View.OnClickListener{
             R.id.queue2,
             R.id.queue3
     };
+    private String timeLast;
+    TimersBuildingClass buildingClass;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer);
+        if (savedInstanceState != null) {
+            timeLast = savedInstanceState.getString("timeLast");
+            Log.i("RunTimer", "savedinstance nie jest null i timelast = "+timeLast);
+        }else{
+            timeLast = getIntent().getExtras().getString("text");
+        }
         init();
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // Make sure to call the super method so that the states of our views are saved
+        super.onSaveInstanceState(outState);
+        // Save our own state now
+        outState.putString("timeLast", buildingClass.returnStringTimers());
     }
 
     private void init(){
@@ -47,10 +63,10 @@ public class RunTimer extends Activity implements View.OnClickListener{
             textViews.add(textView);
         }
 
-        TimersBuildingClass buildingClass = new TimersBuildingClass();
+        buildingClass = new TimersBuildingClass();
         observer = new TimerObserver(buildingClass);
-        Log.i("RunTimer", "w inicie text "+getIntent().getStringExtra("text"));
-        buildingClass.build(""+getIntent().getExtras().getString("text"));
+        Log.i("RunTimer", "w inicie text "+timeLast);
+        buildingClass.build(""+timeLast);
         buildingClass.set();
         buildingClass.start();
         Log.i("RunTimer", "zastartowalo wszytsko");
@@ -60,10 +76,12 @@ public class RunTimer extends Activity implements View.OnClickListener{
     public class TimersBuildingClass {
         List<Timer> timers;
         Iterator iterator;
+        BuilderTimer builderTimer;
 
         void build(String text){
-            BuilderTimer builderTimer = new BuilderTimer(text, textViewTimer);
+            builderTimer = new BuilderTimer(text, textViewTimer);
             builderTimer.buildChainOfTimers();
+            Log.i("RunTimer", "pobieram timersy");
             timers = builderTimer.getTimers();
             iterator = new Iterator(timers);
             timers.get(0).setObserver(observer);
@@ -86,20 +104,29 @@ public class RunTimer extends Activity implements View.OnClickListener{
         }
         void start(){
             timers.get(0).start();
+            Log.i("RunTimer", "startujemy z timerem");
         }
         void update(){
             Log.i("RunTimer", "update w runtime");
+
             timers.remove(0);
-            if(!timers.isEmpty()) {
+            if (!timers.isEmpty()) {
                 playSound();
                 set();
                 timers.get(0).setObserver(observer);
                 start();
-            }else{
+            } else {
                 playSound();
                 textViewTimer.setText("End");
             }
 
+        }
+        String returnStringTimers(){
+            return builderTimer.returnChain();
+        }
+        void cancel(){
+            timers.get(0).cancel();
+            timers = null;
         }
 
     }
@@ -114,5 +141,10 @@ public class RunTimer extends Activity implements View.OnClickListener{
 
     }
 
-
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        buildingClass.cancel();
+        Log.i("RunTimer", "usuwam timersy");
+    }
 }

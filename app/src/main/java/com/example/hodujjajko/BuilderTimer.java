@@ -31,4 +31,15 @@ public class BuilderTimer implements IBuilderTimer {
     public List<Timer> getTimers() {
         return chainOfTimers;
     }
+
+    @Override
+    public String returnChain() {
+        String result = "";
+        for(int i = 0; i < durations.length; i++){
+            Log.i("BuilderTimer","wynik dzielenia " +chainOfTimers.get(i).getMillis()/60000L);
+            result += Double.toString((double)chainOfTimers.get(i).getMillis()/60000) + "+";
+            Log.i("BuilderTimer","tworze stringa spowrotem " + result);
+        }
+        return result;
+    }
 }

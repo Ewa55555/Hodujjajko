@@ -7,4 +7,5 @@ public interface IBuilderTimer {
 
     public void buildChainOfTimers();
     public List<Timer> getTimers();
+    public String returnChain();
 }

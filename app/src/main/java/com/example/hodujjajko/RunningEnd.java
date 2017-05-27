@@ -39,16 +39,19 @@ public class RunningEnd extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.i("RunningEnd", "przygotowywuje mape");
         locationDAO.open();
         List<Location> locations = locationDAO.fetchAllData();
-       // googleMap.animateCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(locations.get(0).longitude,
-         //       locations.get(0).latitude), 17.0f ) );
+        googleMap.animateCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(locations.get(0).longitude,
+                locations.get(0).latitude), 17.0f ) );
 
         PolylineOptions polylineOptions = new PolylineOptions();
         for (int i = 0; i < locations.size() - 1; i++) {
             Log.i("RunningEnd", locations.get(i).longitude+" "+locations.get(i).latitude);
             polylineOptions.add(new LatLng(locations.get(i).longitude, locations.get(i).latitude),
                     new LatLng(locations.get(i + 1).longitude, locations.get(i + 1).latitude));
+            Log.i("RunningEnd","dodaje linie między "+ locations.get(i).longitude+" "+ locations.get(i).latitude+" a "
+                    +locations.get(i + 1).longitude+" " +locations.get(i + 1).latitude);
         }
         polylineOptions.width(1000).color(Color.RED);
         Polyline line = googleMap.addPolyline(polylineOptions);

@@ -45,6 +45,10 @@ public class Timer extends CountDownTimer {
         observer.update();
     }
 
+    public long getMillis(){
+        return millis;
+    }
+
 
 }
 

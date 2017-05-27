@@ -196,9 +196,9 @@ public class GPSTracker extends Service implements LocationListener {
         Float distance = Float.parseFloat(textView.getText().toString()) + results[0];
         textView.setText(distance.toString());
         locationDAO.open();
-        locationDAO.addLocation(new com.example.hodujjajko.Location(longitude, latitude));
+        locationDAO.addLocation(new com.example.hodujjajko.Location(latitude, longitude));
         locationDAO.close();
-        Log.i("GPS","old" + oldLongitude+" "+oldLatitude+" location"+longitude+" "+latitude);
+        Log.i("GPS","old" +oldLatitude+" "+oldLongitude+" location"+latitude+" "+longitude);
     }
 
     @Override
