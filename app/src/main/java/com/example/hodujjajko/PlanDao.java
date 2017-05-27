@@ -86,8 +86,10 @@ public class PlanDao implements IPlanDAO {
         plan.id = cursor.getInt(0);
         plan.name = cursor.getString(1);
         plan.time = cursor.getString(2);
-        plan.dayOfWeek = cursor.getString(3);
-        plan.isOnce = (cursor.getInt(4)!= 0);
+        plan.day = cursor.getString(3);
+        plan.dayOfWeek = cursor.getString(4);
+        Log.i("SCHe","cursorjakie"+cursor.getInt(5));
+        plan.isOnce = (cursor.getInt(5)!= 0);
         Log.i("Shce","isOnce po wyciagnieciu"+plan.isOnce);
         //plan.isOnce = Boolean.parseBoolean(String.valueOf(cursor.getInt(4)));
         return plan;

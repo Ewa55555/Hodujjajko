@@ -290,24 +290,23 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
             Log.i("SCHe","jestem");
             planData.isOnce = true;
             Log.i("SCHe","wartosc isOnce"+planData.isOnce);
+            planData.day=dayView.getText().toString();
         }
         else
         {
             planData.isOnce = false;
+            planData.dayOfWeek = dayView.getText().toString();
 
         }
 
         planData.time = startTimeView.getText().toString();
         planData.name = scheduleName.getText().toString();
-        planData.day = dayView.getText().toString();
-        Log.i("Sche","naaazwa"+scheduleName.getText().toString());
-
         plan.open();
         plan.addPlan(planData);
         List<Plan> p = plan.fetchAllData();
         for(Plan e : p)
         {
-            Log.i("Sche","wynik z bazy   "+e.name+" "+  e.isOnce+ " " + e.day + " " + e.time);
+            Log.i("Sche","wynik z bazy   "+e.name+" "+  e.isOnce+ " " + e.day + " "+ e.dayOfWeek + " " + e.time);
         }
 
     }
