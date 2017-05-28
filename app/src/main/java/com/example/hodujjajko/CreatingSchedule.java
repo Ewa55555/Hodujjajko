@@ -125,7 +125,8 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(getApplicationContext(), getString(R.string.blank_string), Toast.LENGTH_LONG).show();
                 }else {
                     addToDatabase();
-                    Toast.makeText(getApplicationContext(), "Aktywność została dodana", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.activity_added_string), Toast.LENGTH_LONG).show();
+                    finish();
                 }
 
 

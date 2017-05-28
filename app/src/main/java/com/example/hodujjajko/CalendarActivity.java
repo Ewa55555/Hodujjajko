@@ -1,27 +1,17 @@
 package com.example.hodujjajko;
 
 
-import android.app.Activity;
+
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.preference.DialogPreference;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,7 +51,7 @@ public class CalendarActivity extends AppCompatActivity {
                 }
                 planDao.close();
                 if (planDay.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "nie masz tego dnia wydarzen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.no_events_string), Toast.LENGTH_SHORT).show();
                 } else {
                     FragmentManager fm = getFragmentManager();
                     PlanOfDay dialogFragment = new PlanOfDay();
