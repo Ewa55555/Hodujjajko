@@ -16,7 +16,7 @@ public class PlanDao implements IPlanDAO {
     private DatabaseHelper databaseHelper;
     ContentValues initialValues = new ContentValues();
     private String[] allColumns = { DatabaseHelper.COLUMN_ID_PLAN, DatabaseHelper.COLUMN_NAME_PLAN,
-            DatabaseHelper.COLUMN_DAY_PLAN, DatabaseHelper.COLUMN_TIME_PLAN,
+            DatabaseHelper.COLUMN_DAY_PLAN, DatabaseHelper.COLUMN_TIME_START_PLAN, DatabaseHelper.COLUMN_TIME_END_PLAN,
             DatabaseHelper.COLUMN_DAY_OF_WEEK_PLAN , DatabaseHelper.COLUMN_IS_ONCE};
 
     public PlanDao(Context context)
@@ -85,11 +85,12 @@ public class PlanDao implements IPlanDAO {
         Plan plan = new Plan();
         plan.id = cursor.getInt(0);
         plan.name = cursor.getString(1);
-        plan.time = cursor.getString(2);
-        plan.day = cursor.getString(3);
-        plan.dayOfWeek = cursor.getString(4);
-        Log.i("SCHe","cursorjakie"+cursor.getInt(5));
-        plan.isOnce = (cursor.getInt(5)!= 0);
+        plan.day = cursor.getString(2);
+        plan.timeStart = cursor.getString(3);
+        plan.timeEnd = cursor.getString(4);
+        plan.dayOfWeek = cursor.getString(5);
+        Log.i("SCHe","cursorjakie"+cursor.getInt(6));
+        plan.isOnce = (cursor.getInt(6)!= 0);
         Log.i("Shce","isOnce po wyciagnieciu"+plan.isOnce);
         //plan.isOnce = Boolean.parseBoolean(String.valueOf(cursor.getInt(4)));
         return plan;
@@ -98,7 +99,8 @@ public class PlanDao implements IPlanDAO {
     private void setContentValue(Plan plan) {
         initialValues.put(DatabaseHelper.COLUMN_NAME_PLAN, plan.name);
         initialValues.put(DatabaseHelper.COLUMN_DAY_PLAN, plan.day);
-        initialValues.put(DatabaseHelper.COLUMN_TIME_PLAN, plan.time);
+        initialValues.put(DatabaseHelper.COLUMN_TIME_START_PLAN, plan.timeStart);
+        initialValues.put(DatabaseHelper.COLUMN_TIME_END_PLAN, plan.timeEnd);
         initialValues.put(DatabaseHelper.COLUMN_DAY_OF_WEEK_PLAN, plan.dayOfWeek);
         if(plan.isOnce == true) {
             Log.i("Sch", "ustawiam true");

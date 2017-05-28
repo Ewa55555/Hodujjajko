@@ -22,10 +22,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_PLAN="plan";
     public static final String COLUMN_ID_PLAN="_id";
     public static final String COLUMN_DAY_PLAN="day";
-    public static final String COLUMN_TIME_PLAN="time";
+    public static final String COLUMN_TIME_START_PLAN="timeStart";
     public static final String COLUMN_DAY_OF_WEEK_PLAN="dayOfWeek";
     public static final String COLUMN_IS_ONCE="isOnce";
     public static final String COLUMN_NAME_PLAN="name";
+    public static final String COLUMN_TIME_END_PLAN="timeEnd";
 
 
 
@@ -39,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_PLAN = "create table " + TABLE_PLAN + "("+ COLUMN_ID_PLAN
             + " integer primary key autoincrement, " +COLUMN_NAME_PLAN + " text, " + COLUMN_DAY_PLAN +" text, "
-            + COLUMN_TIME_PLAN + " text, " + COLUMN_DAY_OF_WEEK_PLAN + " text, " + COLUMN_IS_ONCE+ " integer);";
+            + COLUMN_TIME_START_PLAN + " text, " + COLUMN_TIME_END_PLAN + " text, " + COLUMN_DAY_OF_WEEK_PLAN + " text, " + COLUMN_IS_ONCE+ " integer);";
 
     private static final int DATABASE_VERSION =1;
 

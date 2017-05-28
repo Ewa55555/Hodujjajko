@@ -123,6 +123,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(getApplicationContext(), getString(R.string.blank_string), Toast.LENGTH_LONG).show();
                 }else {
                     addToDatabase();
+                    Toast.makeText(getApplicationContext(), "Aktywność została dodana", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -299,14 +300,15 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
 
         }
 
-        planData.time = startTimeView.getText().toString();
+        planData.timeStart = startTimeView.getText().toString();
+        planData.timeEnd = endTimeView.getText().toString();
         planData.name = scheduleName.getText().toString();
         plan.open();
         plan.addPlan(planData);
         List<Plan> p = plan.fetchAllData();
         for(Plan e : p)
         {
-            Log.i("Sche","wynik z bazy   "+e.name+" "+  e.isOnce+ " " + e.day + " "+ e.dayOfWeek + " " + e.time);
+            Log.i("Sche","wynik z bazy   "+e.name+" "+  e.isOnce+ " " + e.day + " "+ e.dayOfWeek + " " + e.timeStart + " "+ e.timeEnd);
         }
 
     }

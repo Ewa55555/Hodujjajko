@@ -47,5 +47,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.05"
             app:srcCompat="@drawable/jajka" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

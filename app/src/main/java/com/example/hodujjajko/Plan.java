@@ -7,7 +7,8 @@ public class Plan {
     public String name;
     public boolean isOnce;
     public String day;
-    public String time;
+    public String timeStart;
+    public String timeEnd;
     public String dayOfWeek;
 
 }
