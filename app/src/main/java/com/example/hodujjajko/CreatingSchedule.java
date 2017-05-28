@@ -36,6 +36,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     private TextView frequencyView;
     private static TextView dayView;
     private Button saveButton;
+    private List<String> days;
 
     private PlanDao plan;
     private int regularity;
@@ -44,6 +45,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creating_schedule);
+        createListOfDays();
         init();
     }
 
@@ -225,7 +227,6 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                         if (button.getId() == checkedId) {
                             dayView.setText(button.getText().toString());
                             dismiss();
-
                         }
                     }
                 }
@@ -296,7 +297,8 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         else
         {
             planData.isOnce = false;
-            planData.dayOfWeek = dayView.getText().toString();
+            Log.i("S", "dzien tyg "+days.indexOf(dayView.getText().toString()));
+            planData.dayOfWeek = days.indexOf(dayView.getText().toString()) + 1;
 
         }
 
@@ -311,6 +313,16 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
             Log.i("Sche","wynik z bazy   "+e.name+" "+  e.isOnce+ " " + e.day + " "+ e.dayOfWeek + " " + e.timeStart + " "+ e.timeEnd);
         }
 
+    }
+    private void createListOfDays(){
+        days = new ArrayList<>();
+        days.add(getString(R.string.monday));
+        days.add(getString(R.string.tuesday));
+        days.add(getString(R.string.wednesday));
+        days.add(getString(R.string.thursday));
+        days.add(getString(R.string.friday));
+        days.add(getString(R.string.saturday));
+        days.add(getString(R.string.sunday));
     }
     }
 

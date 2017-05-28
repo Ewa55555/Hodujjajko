@@ -88,7 +88,7 @@ public class PlanDao implements IPlanDAO {
         plan.day = cursor.getString(2);
         plan.timeStart = cursor.getString(3);
         plan.timeEnd = cursor.getString(4);
-        plan.dayOfWeek = cursor.getString(5);
+        plan.dayOfWeek = cursor.getInt(5);
         Log.i("SCHe","cursorjakie"+cursor.getInt(6));
         plan.isOnce = (cursor.getInt(6)!= 0);
         Log.i("Shce","isOnce po wyciagnieciu"+plan.isOnce);

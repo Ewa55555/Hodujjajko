@@ -60,6 +60,10 @@
             android:name=".RunningEnd"
             android:label="" >
         </activity>
+        <activity
+            android:name=".CalendarActivity"
+            android:label="Kalendarz">
+        </activity>
 
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

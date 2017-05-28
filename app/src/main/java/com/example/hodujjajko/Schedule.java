@@ -33,6 +33,7 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
                 creatingScheduleActivity();
                 break;
             case R.id.seeSchedule:
+                seeingScheduleActivity();
                 break;
         }
     }
@@ -41,6 +42,12 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
         Intent creatingScheduleIntent = null;
         creatingScheduleIntent = new Intent(getApplicationContext(), CreatingSchedule.class);
         startActivity(creatingScheduleIntent);
+    }
+
+    private  void seeingScheduleActivity(){
+        Intent seeingScheduleIntent = null;
+        seeingScheduleIntent = new Intent(getApplicationContext(), CalendarActivity.class);
+        startActivity(seeingScheduleIntent);
     }
 
 }
