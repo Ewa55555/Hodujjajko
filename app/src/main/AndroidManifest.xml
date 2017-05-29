@@ -43,7 +43,7 @@
         </activity>
         <activity
             android:name=".Schedule"
-            android:label="Schedule" >
+            android:label="Grafik" >
         </activity>
         <activity
             android:name=".CreatingSchedule"
@@ -59,10 +59,6 @@
         <activity
             android:name=".RunningEnd"
             android:label="" >
-        </activity>
-        <activity
-            android:name=".CalendarActivity"
-            android:label="Kalendarz">
         </activity>
         <activity
             android:name=".TrainingAlert"

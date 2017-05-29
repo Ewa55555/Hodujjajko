@@ -4,15 +4,16 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/seeSchedule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/see_schedule_string" />
-
-    <Button
         android:id="@+id/createSchedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/create_schedule_string" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
 
 </LinearLayout>

@@ -133,7 +133,6 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                 }else {
                     addToDatabase();
                     Toast.makeText(getApplicationContext(), getString(R.string.activity_added_string), Toast.LENGTH_LONG).show();
-                    startAlert();
                     finish();
                 }
 
@@ -320,40 +319,19 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         {
             Log.i("Sche","wynik z bazy   "+e.name+" "+  e.isOnce+ " " + e.day + " "+ e.dayOfWeek + " " + e.timeStart + " "+ e.timeEnd);
         }
+        plan.close();
 
     }
     private void createListOfDays(){
         days = new ArrayList<>();
+        days.add(getString(R.string.sunday));
         days.add(getString(R.string.monday));
         days.add(getString(R.string.tuesday));
         days.add(getString(R.string.wednesday));
         days.add(getString(R.string.thursday));
         days.add(getString(R.string.friday));
         days.add(getString(R.string.saturday));
-        days.add(getString(R.string.sunday));
     }
-    public void startAlert() {
-        Intent intent = new Intent(this, ReminderBroadcastReceiver.class);
-        intent.putExtra("name", scheduleName.getText().toString());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 234324243, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, convertToMillis(), pendingIntent);
-        Log.i("Alert", "ustawiam");
-        Toast.makeText(this, "Alarm set in 3 seconds",Toast.LENGTH_SHORT).show();
-    }
-    private long convertToMillis(){
-        String s = startTimeView.getText().toString()+" "+dayView.getText().toString();
-        Log.i("creating", "string "+s);
-        SimpleDateFormat sdf =  new SimpleDateFormat("kk:mm:ss dd.MM.yyyy");
-        try {
-            Date date = sdf.parse(s);
-            Log.i("creating", "milisek "+date.getTime());
-            return date.getTime();
-        }catch (Exception e){
-            Log.i("creating", "weszlam do catcha");
-            return 0;
-        }
-    }
+
 }
 

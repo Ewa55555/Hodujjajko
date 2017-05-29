@@ -43,8 +43,14 @@ public class GPSTracker extends Service implements LocationListener {
         locationDAO = new LocationDAO(context);
         this.textView = textView;
         getLocation();
-
     }
+    public GPSTracker(Context context)
+    {
+        this.context = context;
+        locationDAO = new LocationDAO(context);
+        getLocation();
+    }
+
     public Location getLocation()
     {
         Log.i("GPS", "jestem w getLocation");
