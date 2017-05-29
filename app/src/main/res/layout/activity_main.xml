@@ -23,12 +23,6 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <Button
-            android:id="@+id/YourActivity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/your_activity_string" />
-
-        <Button
             android:id="@+id/Schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
