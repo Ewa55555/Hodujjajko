@@ -184,21 +184,24 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        double oldLatitude = latitude;
-        double oldLongitude = longitude;
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        float[] results = new float[1];
-        results[0] = 0;
-        Location.distanceBetween(oldLatitude, oldLongitude,
-                latitude, longitude, results);
-        Log.i("GPS", "distans "+results[0]);
-        Float distance = Float.parseFloat(textView.getText().toString()) + results[0];
-        textView.setText(distance.toString());
         locationDAO.open();
+        if (!locationDAO.fetchAllData().isEmpty()) {
+            double oldLatitude = latitude;
+            double oldLongitude = longitude;
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            float[] results = new float[1];
+            results[0] = 0;
+            Location.distanceBetween(oldLatitude, oldLongitude,
+                    latitude, longitude, results);
+            Log.i("GPS", "distans " + results[0]);
+            Float distance = Float.parseFloat(textView.getText().toString()) + results[0];
+            textView.setText(distance.toString());
+            Log.i("GPS","old" +oldLatitude+" "+oldLongitude+" location"+latitude+" "+longitude);
+        }
         locationDAO.addLocation(new com.example.hodujjajko.Location(latitude, longitude));
         locationDAO.close();
-        Log.i("GPS","old" +oldLatitude+" "+oldLongitude+" location"+latitude+" "+longitude);
+
     }
 
     @Override

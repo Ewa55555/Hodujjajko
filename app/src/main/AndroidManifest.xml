@@ -64,6 +64,13 @@
             android:name=".CalendarActivity"
             android:label="Kalendarz">
         </activity>
+        <activity
+            android:name=".TrainingAlert"
+            android:label=""
+            android:taskAffinity="">
+        </activity>
+        <receiver android:name=".ReminderBroadcastReceiver" >
+        </receiver>
 
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

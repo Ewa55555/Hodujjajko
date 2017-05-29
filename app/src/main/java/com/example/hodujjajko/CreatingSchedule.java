@@ -1,9 +1,12 @@
 package com.example.hodujjajko;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +22,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CreatingSchedule extends AppCompatActivity implements View.OnClickListener{
 
@@ -37,6 +43,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     private static TextView dayView;
     private Button saveButton;
     private List<String> days;
+    private static long milis;
 
     private PlanDao plan;
     private int regularity;
@@ -126,6 +133,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                 }else {
                     addToDatabase();
                     Toast.makeText(getApplicationContext(), getString(R.string.activity_added_string), Toast.LENGTH_LONG).show();
+                    startAlert();
                     finish();
                 }
 
@@ -146,7 +154,6 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
             final Calendar c = Calendar.getInstance();
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
-
             // Create a new instance of TimePickerDialog and return
             return new TimePickerDialog(getActivity(), this, hour, minute, true);
         }
@@ -325,5 +332,28 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         days.add(getString(R.string.saturday));
         days.add(getString(R.string.sunday));
     }
+    public void startAlert() {
+        Intent intent = new Intent(this, ReminderBroadcastReceiver.class);
+        intent.putExtra("name", scheduleName.getText().toString());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(), 234324243, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, convertToMillis(), pendingIntent);
+        Log.i("Alert", "ustawiam");
+        Toast.makeText(this, "Alarm set in 3 seconds",Toast.LENGTH_SHORT).show();
     }
+    private long convertToMillis(){
+        String s = startTimeView.getText().toString()+" "+dayView.getText().toString();
+        Log.i("creating", "string "+s);
+        SimpleDateFormat sdf =  new SimpleDateFormat("kk:mm:ss dd.MM.yyyy");
+        try {
+            Date date = sdf.parse(s);
+            Log.i("creating", "milisek "+date.getTime());
+            return date.getTime();
+        }catch (Exception e){
+            Log.i("creating", "weszlam do catcha");
+            return 0;
+        }
+    }
+}
 

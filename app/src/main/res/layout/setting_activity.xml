@@ -10,12 +10,6 @@
         android:text="@string/work_string" />
 
     <Button
-        android:id="@+id/training"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/training_string" />
-
-    <Button
         android:id="@+id/running"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

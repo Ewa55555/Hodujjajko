@@ -73,6 +73,7 @@ public class GPSActivity extends Activity {
         stopRunning.setEnabled(true);
         startTime = System.currentTimeMillis();
         locationDAO.open();
+        Log.i("GPS", "usuwam baze");
         locationDAO.deleteAll();
         locationDAO.close();
         gps = new GPSTracker(GPSActivity.this, distance);

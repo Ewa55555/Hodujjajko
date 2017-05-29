@@ -11,7 +11,7 @@
     <string name="timer7_string">0.75+0.25</string>
     <string name="timer8_string">1+0.25</string>
     <string name="start_timer_string">START</string>
-    <string name="work_string">Praca własna</string>
+    <string name="work_string">Praca/Trening</string>
     <string name="running_string">Bieganie</string>
     <string name="training_string">Trening</string>
     <string name="your_activity_string">Twoja aktywność</string>

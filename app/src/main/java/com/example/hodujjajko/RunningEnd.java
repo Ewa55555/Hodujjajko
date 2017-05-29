@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -48,13 +49,17 @@ public class RunningEnd extends FragmentActivity implements OnMapReadyCallback {
         PolylineOptions polylineOptions = new PolylineOptions();
         for (int i = 0; i < locations.size() - 1; i++) {
             Log.i("RunningEnd", locations.get(i).longitude+" "+locations.get(i).latitude);
-            polylineOptions.add(new LatLng(locations.get(i).longitude, locations.get(i).latitude),
-                    new LatLng(locations.get(i + 1).longitude, locations.get(i + 1).latitude));
+            polylineOptions.add(new LatLng(locations.get(i).latitude, locations.get(i).longitude),
+                    new LatLng(locations.get(i + 1).latitude, locations.get(i + 1).longitude));
             Log.i("RunningEnd","dodaje linie między "+ locations.get(i).longitude+" "+ locations.get(i).latitude+" a "
                     +locations.get(i + 1).longitude+" " +locations.get(i + 1).latitude);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(locations.get(i).latitude, locations.get(i).longitude)));
         }
-        polylineOptions.width(1000).color(Color.RED);
+        polylineOptions.width(100).color(Color.RED);
         Polyline line = googleMap.addPolyline(polylineOptions);
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(locations.get(locations.size()-1).latitude, locations.get(locations.size()-1).longitude)));
         locationDAO.close();
     }
 
