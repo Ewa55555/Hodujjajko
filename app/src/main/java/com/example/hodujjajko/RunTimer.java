@@ -11,8 +11,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class RunTimer extends Activity implements View.OnClickListener{
     };
     private String timeLast;
     TimersBuildingClass buildingClass;
+
 
 
     @Override
@@ -117,7 +121,8 @@ public class RunTimer extends Activity implements View.OnClickListener{
                 start();
             } else {
                 playSound();
-                textViewTimer.setText("End");
+//                textViewTimer.setText("End");
+                points();
             }
 
         }
@@ -138,6 +143,19 @@ public class RunTimer extends Activity implements View.OnClickListener{
     }
     @Override
     public void onClick(View v) {
+
+    }
+
+    public void points()
+    {
+        LinearLayout lL = (LinearLayout) findViewById(R.id.linearLayout);
+        TextView viewPoints = (TextView) findViewById(R.id.textView);
+        ImageView image= new ImageView(this);
+        image.setImageDrawable(getResources().getDrawable(R.drawable.kurczak));
+        lL.addView(image);
+        super.onResume() ;
+        setContentView(R.layout.points);
+//        viewPoints.setText("Zdobyłeś 200 punktów");
 
     }
 

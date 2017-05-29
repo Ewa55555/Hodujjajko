@@ -41,7 +41,7 @@ public class Pedometr extends Activity implements SensorEventListener {
         if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
         } else {
-            Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Sensor jest niedostępny!", Toast.LENGTH_LONG).show();
         }
 
     }
