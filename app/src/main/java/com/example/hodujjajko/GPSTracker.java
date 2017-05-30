@@ -34,7 +34,7 @@ public class GPSTracker extends Service implements LocationListener {
     public LocationManager locationManager;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 2; // 10 meters
     private static final long MIN_TIME_BW_UPDATES = 1000 * 30; // 1 minute
-    private int  MY_PERMISSIONS_CODE;
+    public int  MY_PERMISSIONS_CODE;
     LocationDAO locationDAO;
     TextView textView;
     public GPSTracker(Context context, TextView textView)
@@ -42,81 +42,88 @@ public class GPSTracker extends Service implements LocationListener {
         this.context = context;
         locationDAO = new LocationDAO(context);
         this.textView = textView;
-        getLocation();
+        //tryGetLocation();
     }
     public GPSTracker(Context context)
     {
         this.context = context;
         locationDAO = new LocationDAO(context);
-        getLocation();
+        //tryGetLocation();
     }
 
-    public Location getLocation()
-    {
+    public Location tryGetLocation() {
         Log.i("GPS", "jestem w getLocation");
-        Log.i("GPS","wersja api"+Build.VERSION.SDK_INT);
-        Log.i("GSP","blee"+ ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_FINE_LOCATION ));
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("GSP", "jestem w ifie");
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_CODE);
-        }else {
-            try {
-                locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        Log.i("GPS", "wersja api" + Build.VERSION.SDK_INT);
+        Log.i("GSP", "blee" + ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION));
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.i("GSP", "jestem w ifie");
+                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_CODE);
+                return null;
+        }
+        else{
+            return onPermissionsReady();
+        }
 
-                // getting GPS status
-                isGPSOn = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                Log.i("GPS","GSP status"+isGPSOn);
+    }
 
-                // getting network status
-                isNetworkOn = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-                if (!isGPSOn && !isNetworkOn) {
-                    // no network provider is enabled
-                } else {
-                    this.canGetLocation = true;
-                    Log.i("GPS", "moge pobrać położenie");
-                    // First get location from Network Provider
-                    if (isNetworkOn) {
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        Log.d("Network", "Network");
-                        if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                            if (location != null) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                                Log.i("GPS","ustawiam na poczatku "+latitude+" "+longitude);
-                            }
-                        }
+    public Location onPermissionsReady() {
+
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+
+        // getting GPS status
+        isGPSOn = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        Log.i("GPS", "GSP status" + isGPSOn);
+
+        // getting network status
+        isNetworkOn = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        try{
+        if (!isGPSOn && !isNetworkOn) {
+            Log.i("GPS", "ni ma nic");
+        } else {
+
+            this.canGetLocation = true;
+            Log.i("GPS", "moge pobrać położenie");
+            // First get location from Network Provider
+            if (isNetworkOn) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                Log.d("Network", "Network");
+                if (locationManager != null) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location != null) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        Log.i("GPS", "ustawiam na poczatku " + latitude + " " + longitude);
                     }
-                    // if GPS Enabled get lat/long using GPS Services
-                    if (isGPSOn) {
-                        if (location == null) {
-                            locationManager.requestLocationUpdates(
-                                    LocationManager.GPS_PROVIDER,
-                                    MIN_TIME_BW_UPDATES,
-                                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                            Log.d("GPS Enabled", "GPS Enabled");
-                            if (locationManager != null) {
-                                location = locationManager
-                                        .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                if (location != null) {
-                                    latitude = location.getLatitude();
-                                    longitude = location.getLongitude();
-                                }
-                            }
+                }
+            }
+            // if GPS Enabled get lat/long using GPS Services
+            if (isGPSOn) {
+                if (location == null) {
+                    locationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER,
+                            MIN_TIME_BW_UPDATES,
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                    Log.d("GPS Enabled", "GPS Enabled");
+                    if (locationManager != null) {
+                        location = locationManager
+                                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if (location != null) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
                         }
                     }
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        }}
+        catch(SecurityException e){
+            e.printStackTrace();
         }
-
         return location;
     }
+
 
     public void stopUsingGPS(){
         if(locationManager != null){
@@ -166,6 +173,7 @@ public class GPSTracker extends Service implements LocationListener {
             public void onClick(DialogInterface dialog,int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 context.startActivity(intent);
+                onPermissionsReady();
             }
         });
 
@@ -191,6 +199,7 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         locationDAO.open();
+        Log.i("GPS", "onlocationchanged");
         if (!locationDAO.fetchAllData().isEmpty()) {
             double oldLatitude = latitude;
             double oldLongitude = longitude;

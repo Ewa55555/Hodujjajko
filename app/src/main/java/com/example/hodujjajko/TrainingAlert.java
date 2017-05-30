@@ -10,11 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.*;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -46,7 +42,6 @@ public class TrainingAlert extends Activity {
         gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         if (gravitySensor == null){
             Toast.makeText(this,"Nie ma sensoru", Toast.LENGTH_SHORT).show();
-            mp.stop();
         }
         else {
             gravityEventListener = new SensorEventListener() {

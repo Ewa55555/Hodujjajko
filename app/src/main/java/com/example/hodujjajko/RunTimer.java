@@ -34,7 +34,9 @@ public class RunTimer extends Activity implements View.OnClickListener{
             R.id.queue3
     };
     private String timeLast;
+    private String originalTime;
     TimersBuildingClass buildingClass;
+    int sumOfPoints = 0;
 
 
 
@@ -44,9 +46,11 @@ public class RunTimer extends Activity implements View.OnClickListener{
         setContentView(R.layout.timer);
         if (savedInstanceState != null) {
             timeLast = savedInstanceState.getString("timeLast");
+            originalTime = savedInstanceState.getString("originalTime");
             Log.i("RunTimer", "savedinstance nie jest null i timelast = "+timeLast);
         }else{
             timeLast = getIntent().getExtras().getString("text");
+            originalTime = timeLast;
         }
         init();
     }
@@ -56,6 +60,7 @@ public class RunTimer extends Activity implements View.OnClickListener{
         super.onSaveInstanceState(outState);
         // Save our own state now
         outState.putString("timeLast", buildingClass.returnStringTimers());
+        outState.putString("originalTime", originalTime);
     }
 
     private void init(){
@@ -121,7 +126,13 @@ public class RunTimer extends Activity implements View.OnClickListener{
                 start();
             } else {
                 playSound();
-//                textViewTimer.setText("End");
+                double result = 0;
+                String points[] = originalTime.split("\\+");
+                for(String v: points){
+                    result += Double.parseDouble(v);
+                }
+                sumOfPoints = 10*(int)result;
+                textViewTimer.setText("Zdobyto "+(int)result*10+" punktów");
                 points();
             }
 
@@ -148,14 +159,27 @@ public class RunTimer extends Activity implements View.OnClickListener{
 
     public void points()
     {
-        LinearLayout lL = (LinearLayout) findViewById(R.id.linearLayout);
-        TextView viewPoints = (TextView) findViewById(R.id.textView);
+        LinearLayout lL = (LinearLayout) findViewById(R.id.layoutDown);
         ImageView image= new ImageView(this);
-        image.setImageDrawable(getResources().getDrawable(R.drawable.kurczak));
-        lL.addView(image);
-        super.onResume() ;
-        setContentView(R.layout.points);
-//        viewPoints.setText("Zdobyłeś 200 punktów");
+        if(sumOfPoints > 20) {
+            image.setImageDrawable(getResources().getDrawable(R.drawable.kurczak));
+            lL.addView(image);
+        }else if(sumOfPoints >50){
+            image.setImageDrawable(getResources().getDrawable(R.drawable.kurczak1));
+            lL.addView(image);
+
+        }else if(sumOfPoints > 100)
+        {
+            image.setImageDrawable(getResources().getDrawable(R.drawable.kura));
+            lL.addView(image);
+
+        }else
+        {
+            image.setImageDrawable(getResources().getDrawable(R.drawable.kurczak2));
+            lL.addView(image);
+        }
+
+
 
     }
 

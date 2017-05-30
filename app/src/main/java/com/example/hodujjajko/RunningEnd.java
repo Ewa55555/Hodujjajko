@@ -35,6 +35,7 @@ public class RunningEnd extends FragmentActivity implements OnMapReadyCallback {
         durationTime = (TextView)findViewById(R.id.durationTime);
         long duration = System.currentTimeMillis() - getIntent().getExtras().getLong("startTime");
         durationTime.setText(convertTime(duration));
+        Log.i("Running End", "create");
 
     }
 
@@ -43,8 +44,8 @@ public class RunningEnd extends FragmentActivity implements OnMapReadyCallback {
         Log.i("RunningEnd", "przygotowywuje mape");
         locationDAO.open();
         List<Location> locations = locationDAO.fetchAllData();
-        googleMap.animateCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(locations.get(0).longitude,
-                locations.get(0).latitude), 17.0f ) );
+        googleMap.animateCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(locations.get(0).latitude,
+                locations.get(0).longitude), 17.0f ) );
 
         PolylineOptions polylineOptions = new PolylineOptions();
         for (int i = 0; i < locations.size() - 1; i++) {
@@ -56,11 +57,13 @@ public class RunningEnd extends FragmentActivity implements OnMapReadyCallback {
             googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(locations.get(i).latitude, locations.get(i).longitude)));
         }
-        polylineOptions.width(100).color(Color.RED);
+        polylineOptions.width(5).color(Color.RED);
         Polyline line = googleMap.addPolyline(polylineOptions);
+        Log.i("RunningEnd", "dodaje marker na pozycji "+(locations.size()-1));
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(locations.get(locations.size()-1).latitude, locations.get(locations.size()-1).longitude)));
         locationDAO.close();
+        Log.i("RunningEnd","zamykam baze");
     }
 
     public String convertTime(long millis){

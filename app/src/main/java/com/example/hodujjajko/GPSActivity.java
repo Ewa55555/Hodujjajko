@@ -3,6 +3,7 @@ package com.example.hodujjajko;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.*;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -80,10 +81,24 @@ public class GPSActivity extends Activity {
         if (gps.canGetLocation()) {
             latitude = gps.getLatitude();
             longitude = gps.getLongitude();
-            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-        } else {
+
+        }
+        else {
+            android.location.Location l = gps.tryGetLocation();
+            latitude = l.getLatitude();
+            longitude = l.getLongitude();
+        }
+        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.i("GPS","onrequestpermission");
+        if (requestCode == gps.MY_PERMISSIONS_CODE) {
+            Log.i("Gps", "request w ifie");
             gps.showSettingsAlert();
         }
+
     }
 
 }

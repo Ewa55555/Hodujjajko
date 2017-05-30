@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_DURATION + " integer ," + COLUMN_IS_DONE + " integer);";
 
     private static final String CREATE_LOCATION = "create table " + TABLE_LOCATION + "("+ COLUMN_ID_LOCATION
-            + " integer primary key autoincrement, " + COLUMN_LONGITUDE + " real," + COLUMN_LATITUDE +" real);";
+            + " integer primary key autoincrement, " + COLUMN_LATITUDE + " real," + COLUMN_LONGITUDE +" real);";
 
     private static final String CREATE_PLAN = "create table " + TABLE_PLAN + "("+ COLUMN_ID_PLAN
             + " integer primary key autoincrement, " +COLUMN_NAME_PLAN + " text, " + COLUMN_DAY_PLAN +" text, "

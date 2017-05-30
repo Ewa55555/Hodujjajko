@@ -43,7 +43,7 @@
             app:srcCompat="@drawable/jajka" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/takePhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_menu_camera" />

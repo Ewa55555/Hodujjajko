@@ -18,6 +18,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/layoutDown"
         android:layout_width="match_parent"
         android:layout_height="136dp"
         android:orientation="horizontal">

@@ -16,8 +16,8 @@ public class LocationDAO implements ILocationDAO {
     private SQLiteDatabase database;
     private DatabaseHelper databaseHelper;
     ContentValues initialValues = new ContentValues();
-    private String[] allColumns = { DatabaseHelper.COLUMN_ID_LOCATION, DatabaseHelper.COLUMN_LONGITUDE,
-                                    DatabaseHelper.COLUMN_LATITUDE};
+    private String[] allColumns = { DatabaseHelper.COLUMN_ID_LOCATION, DatabaseHelper.COLUMN_LATITUDE,
+                                    DatabaseHelper.COLUMN_LONGITUDE};
     public LocationDAO(Context context)
     {
         databaseHelper = DatabaseHelper.getInstance(context);
@@ -84,14 +84,15 @@ public class LocationDAO implements ILocationDAO {
     private Location cursorToLocation (Cursor cursor) {
         Location location= new Location();
         location.id = cursor.getInt(0);
-        location.longitude = cursor.getDouble(1);
-        location.latitude = cursor.getDouble(2);
+        location.latitude = cursor.getDouble(1);
+        location.longitude = cursor.getDouble(2);
         return location;
     }
 
     private void setContentValue(Location location) {
-        initialValues.put(DatabaseHelper.COLUMN_LONGITUDE, location.longitude);
         initialValues.put(DatabaseHelper.COLUMN_LATITUDE, location.latitude);
+        initialValues.put(DatabaseHelper.COLUMN_LONGITUDE, location.longitude);
+
 
     }
     private ContentValues getContentValue() {
