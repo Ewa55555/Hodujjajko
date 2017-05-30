@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,12 +26,18 @@ public class Pedometr extends Activity implements SensorEventListener{
     private String counting;
     private int sumOfPoints = 0;
     private TextView info ;
+    TrainingDao training;
+    Time startTime= new Time();
+    Time stopTime = new Time();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pedometr);
         count = (TextView) findViewById(R.id.conterTextView);
+        startTime.setToNow();
+        training = new TrainingDao(getApplicationContext());
         if (savedInstanceState != null) {
             counting = savedInstanceState.getString("counting");
             count.setText(counting);
@@ -51,9 +58,11 @@ public class Pedometr extends Activity implements SensorEventListener{
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stopTime.setToNow();
                 sumOfPoints = (int)Double.parseDouble(count.getText().toString());
                 onPause();
                 points();
+                addToDatabase();
             }
         });
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -125,5 +134,19 @@ public class Pedometr extends Activity implements SensorEventListener{
             image.setImageDrawable(getResources().getDrawable(R.drawable.kurczak2));
             lL.addView(image);
         }
+    }
+
+    public void addToDatabase()
+    {
+        training.open();
+        Training t = new Training();
+        t.points = sumOfPoints;
+        t.duration = Integer.parseInt(count.getText().toString());
+        t.start = startTime.toString();
+        t.finish= stopTime.toString();
+        t.typeOfTraining="Krokomierz";
+        training.addTraining(t);
+        training.close();
+
     }
 }

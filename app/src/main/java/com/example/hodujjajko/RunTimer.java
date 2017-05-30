@@ -10,6 +10,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,9 @@ public class RunTimer extends Activity implements View.OnClickListener{
     private String originalTime;
     TimersBuildingClass buildingClass;
     int sumOfPoints = 0;
+    TrainingDao training;
+    Time startTime= new Time();
+    Time stopTime = new Time();
 
 
 
@@ -65,6 +69,8 @@ public class RunTimer extends Activity implements View.OnClickListener{
 
     private void init(){
         Log.i("RunTimer", "jestesmy w inice");
+        startTime.setToNow();
+        training = new TrainingDao(getApplicationContext());
         textViewTimer = (TextView)findViewById(R.id.textViewTime);
         textViews = new ArrayList<>(QUEUE_IDS.length);
         for(int id : QUEUE_IDS) {
@@ -127,13 +133,16 @@ public class RunTimer extends Activity implements View.OnClickListener{
             } else {
                 playSound();
                 double result = 0;
-                String points[] = originalTime.split("\\+");
-                for(String v: points){
-                    result += Double.parseDouble(v);
-                }
-                sumOfPoints = 10*(int)result;
-                textViewTimer.setText("Zdobyto "+(int)result*10+" punktów");
+                    String points[] = originalTime.split("\\+");
+                    for (String v : points) {
+                        result += Double.parseDouble(v);
+                    }
+                sumOfPoints = (int)(10*result);
+                Log.i("Run","suma"+sumOfPoints);
+                textViewTimer.setText("Zdobyto "+sumOfPoints+" punktów");
+                stopTime.setToNow();
                 points();
+                addToDatabase();
             }
 
         }
@@ -191,6 +200,19 @@ public class RunTimer extends Activity implements View.OnClickListener{
 
         buildingClass.cancel();
         Log.i("RunTimer", "usuwam timersy");
+    }
+
+    public void addToDatabase()
+    {
+        training.open();
+        Training t = new Training();
+        t.points = sumOfPoints;
+        t.start = startTime.toString();
+        t.finish= stopTime.toString();
+        t.typeOfTraining="Stoper";
+        training.addTraining(t);
+        training.close();
+
     }
 
 }

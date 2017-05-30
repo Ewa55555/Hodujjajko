@@ -34,12 +34,14 @@ public class GPSActivity extends Activity {
     private TextView timeRunning;
     LocationDAO locationDAO;
     long startTime;
+    TrainingDao training;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.running);
         locationDAO = new LocationDAO(this);
+        training = new TrainingDao(this);
         distance = (TextView) findViewById(R.id.distance);
 
         stopRunning = (Button) findViewById(R.id.stopRunning);
@@ -98,6 +100,18 @@ public class GPSActivity extends Activity {
             Log.i("Gps", "request w ifie");
             gps.showSettingsAlert();
         }
+
+    }
+
+    public void addToDatabase()
+    {
+        training.open();
+        Training t = new Training();
+        t.duration = Integer.parseInt(distance.getText().toString());
+        t.start = String.valueOf(startTime);
+        t.typeOfTraining="Bieganie";
+        training.addTraining(t);
+        training.close();
 
     }
 
