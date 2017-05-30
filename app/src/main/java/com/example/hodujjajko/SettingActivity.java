@@ -55,6 +55,7 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     private void startPedometr(){
         Intent pedometrIntent = null;
         pedometrIntent = new Intent(getApplicationContext(), Pedometr.class);
+        Log.i("setting","wlaczam krokomierz");
         startActivity(pedometrIntent);
     }
     private void startRunning(){

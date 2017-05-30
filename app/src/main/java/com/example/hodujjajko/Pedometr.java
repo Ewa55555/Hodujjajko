@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Pedometr extends Activity implements SensorEventListener {
+public class Pedometr extends Activity implements SensorEventListener{
 
     private SensorManager sensorManager;
     private TextView count;
@@ -24,24 +24,18 @@ public class Pedometr extends Activity implements SensorEventListener {
     boolean activityRunning;
     private String counting;
     private int sumOfPoints = 0;
+    private TextView info ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pedometr);
         count = (TextView) findViewById(R.id.conterTextView);
-        stop = (Button) findViewById(R.id.stopButton);
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPause();
-                points();
-            }
-        });
         if (savedInstanceState != null) {
             counting = savedInstanceState.getString("counting");
+            count.setText(counting);
         } else {
-            counting = getIntent().getExtras().getString("text");
+            counting = "0";
         }
 
         PackageManager pm = getPackageManager();
@@ -51,13 +45,24 @@ public class Pedometr extends Activity implements SensorEventListener {
             Log.i("Pedometr", "Brak czujnika");
         }
 
+
+        stop = (Button) findViewById(R.id.stopButton);
+        info = (TextView) findViewById(R.id.infoTextView);
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sumOfPoints = (int)Double.parseDouble(count.getText().toString());
+                onPause();
+                points();
+            }
+        });
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("counting", counting);
+        outState.putString("counting", count.getText().toString());
     }
 
     @Override
@@ -75,10 +80,11 @@ public class Pedometr extends Activity implements SensorEventListener {
 
     @Override
     protected void onPause() {
+        Log.i("Pedometr","pauza");
         super.onPause();
         activityRunning = false;
         sensorManager.unregisterListener(this);
-        sumOfPoints = Integer.parseInt(counting);
+
     }
 
     @Override
@@ -99,6 +105,9 @@ public class Pedometr extends Activity implements SensorEventListener {
     }
 
     public void points() {
+        info.setText("");
+        count.setText("Zdobyto " + sumOfPoints + " punktów");
+        stop.setVisibility(View.INVISIBLE);
         LinearLayout lL = (LinearLayout) findViewById(R.id.counter);
         ImageView image = new ImageView(this);
         if (sumOfPoints > 100) {
