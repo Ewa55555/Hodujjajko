@@ -141,8 +141,10 @@ public class RunTimer extends Activity implements View.OnClickListener{
             return builderTimer.returnChain();
         }
         void cancel(){
-            timers.get(0).cancel();
-            timers = null;
+            if(!timers.isEmpty()) {
+                timers.get(0).cancel();
+                timers = null;
+            }
         }
 
     }
@@ -186,7 +188,9 @@ public class RunTimer extends Activity implements View.OnClickListener{
     @Override
     public void onDestroy(){
         super.onDestroy();
+
         buildingClass.cancel();
         Log.i("RunTimer", "usuwam timersy");
     }
+
 }

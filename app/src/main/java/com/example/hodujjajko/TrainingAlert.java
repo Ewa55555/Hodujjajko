@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -28,16 +29,18 @@ public class TrainingAlert extends Activity {
     SensorManager sensorManager;
     Sensor gravitySensor;
     SensorEventListener gravityEventListener;
+    private Intent intent;
+    private MediaPlayer mp;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         forecastService = new ForecastService();
         temperatureString = "";
-        final MediaPlayer mp = MediaPlayer.create(getApplicationContext(),R.raw.there_is_a_fire_somewhere);
+        mp = MediaPlayer.create(getApplicationContext(),R.raw.there_is_a_fire_somewhere);
         mp.setLooping(true);
         mp.start();
-        Intent intent = getIntent();
+        intent = getIntent();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         if (gravitySensor == null){
@@ -58,11 +61,16 @@ public class TrainingAlert extends Activity {
                 }
             };
         }
+        weather();
+        Log.i("Alert", "temperatura przed alertem "+temperatureString);
+
+    }
+    private void alert(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder
                 .setTitle("Powiadomienie")
                 .setMessage(getString(R.string.alert_message_string)+" "+intent.getStringExtra("name")+"\n"+
-                temperatureString)
+                        temperatureString)
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -77,26 +85,30 @@ public class TrainingAlert extends Activity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-    private void test(){
+    private void weather(){
         GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
         if (gpsTracker.canGetLocation()) {
             latitude = gpsTracker.getLatitude();
             longitude = gpsTracker.getLongitude();
+            Log.i("Alert","Weszlam do temp "+latitude+" "+longitude);
             Callback<Forecast> callback = new Callback<Forecast>() {
                 @Override
                 public void onResponse(Call<Forecast> call, Response<Forecast> response) {
                     temperature = (response.body().getCurrently().getTemperature() - 32) * 5 / 9;
                     temperatureString = getString(R.string.weather_message_string)+
                             (int)temperature+getString(R.string.degrees_string);
+                    Log.i("Alert",temperatureString);
+                    alert();
                 }
                 @Override
                 public void onFailure(Call<Forecast> call, Throwable t) {
-                    Log.i("Main",t.getMessage());
+                    Log.i("Main","alo"+t.getMessage());
                 }
             };
             forecastService.LoadForecastDate(callback, latitude ,longitude );
         } else {
-            gpsTracker.showSettingsAlert();
+            //gpsTracker.tryGetLocation();
+            Log.i("trainingalert","nie ma temp");
         }
 
     }

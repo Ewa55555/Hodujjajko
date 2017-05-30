@@ -25,7 +25,7 @@ import java.util.List;
 
 public class GPSActivity extends Activity {
 
-    GPSTracker gps;
+    GPSTrackerRunning gps;
     double longitude;
     double latitude;
     private Button stopRunning;
@@ -77,7 +77,7 @@ public class GPSActivity extends Activity {
         Log.i("GPS", "usuwam baze");
         locationDAO.deleteAll();
         locationDAO.close();
-        gps = new GPSTracker(GPSActivity.this, distance);
+        gps = new GPSTrackerRunning(GPSActivity.this, distance);
         if (gps.canGetLocation()) {
             latitude = gps.getLatitude();
             longitude = gps.getLongitude();

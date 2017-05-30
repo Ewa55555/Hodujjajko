@@ -37,18 +37,12 @@ public class GPSTracker extends Service implements LocationListener {
     public int  MY_PERMISSIONS_CODE;
     LocationDAO locationDAO;
     TextView textView;
-    public GPSTracker(Context context, TextView textView)
-    {
-        this.context = context;
-        locationDAO = new LocationDAO(context);
-        this.textView = textView;
-        //tryGetLocation();
-    }
+
     public GPSTracker(Context context)
     {
         this.context = context;
         locationDAO = new LocationDAO(context);
-        //tryGetLocation();
+        tryGetLocation();
     }
 
     public Location tryGetLocation() {
@@ -198,24 +192,6 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        locationDAO.open();
-        Log.i("GPS", "onlocationchanged");
-        if (!locationDAO.fetchAllData().isEmpty()) {
-            double oldLatitude = latitude;
-            double oldLongitude = longitude;
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-            float[] results = new float[1];
-            results[0] = 0;
-            Location.distanceBetween(oldLatitude, oldLongitude,
-                    latitude, longitude, results);
-            Log.i("GPS", "distans " + results[0]);
-            Float distance = Float.parseFloat(textView.getText().toString()) + results[0];
-            textView.setText(distance.toString());
-            Log.i("GPS","old" +oldLatitude+" "+oldLongitude+" location"+latitude+" "+longitude);
-        }
-        locationDAO.addLocation(new com.example.hodujjajko.Location(latitude, longitude));
-        locationDAO.close();
 
     }
 
