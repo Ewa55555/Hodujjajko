@@ -46,6 +46,7 @@
     <string name="alert_message_string">Za 5 min zaczynasz wydarzenie: </string>
     <string name="weather_message_string">Temperatura na zewnątrz: </string>
     <string name="degrees_string">ºC</string>
+    <string name="counter">Ilość kroków</string>
     <string name="step_counter">android.hardware.sensor.stepcounter</string>
     <string name="step_detector">android.hardware.sensor.stepdetector</string>
 </resources>
