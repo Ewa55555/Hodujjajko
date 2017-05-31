@@ -94,7 +94,6 @@ public class Activities extends Activity{
         trainingDao.open();
         trainingDao.deleteTraining(listOfTraining.get(id));
         List<Training> t = trainingDao.fetchAllData();
-        Log.i("AC","ilosc danych"+t.size());
         trainingDao.close();
     }
     @Override
@@ -109,6 +108,7 @@ public class Activities extends Activity{
     }
     @Override
     public void onDestroy() {
+
         super.onDestroy();
     }
 
