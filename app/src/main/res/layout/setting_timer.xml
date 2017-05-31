@@ -28,11 +28,24 @@
         android:hint="@string/enter_timer_string"
         android:inputType="numberSigned|numberDecimal" />
 
-    <Button
-        android:id="@+id/reset"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/reset_string" />
+        android:layout_height="51dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/plus"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reset_string" />
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"

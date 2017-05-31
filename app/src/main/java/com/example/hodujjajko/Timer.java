@@ -40,6 +40,10 @@ public class Timer extends CountDownTimer {
         textView.setText(convertTime());
     }
 
+    public String getTime(){
+        return convertTime();
+    }
+
     @Override
     public void onFinish() {
         observer.update();

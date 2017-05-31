@@ -2,6 +2,7 @@ package com.example.hodujjajko;
 
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -10,6 +11,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +26,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+import android.os.Handler;
+import java.util.Timer;
 
 public class RunTimer extends Activity implements View.OnClickListener{
 
@@ -43,12 +49,16 @@ public class RunTimer extends Activity implements View.OnClickListener{
     TrainingDao training;
     String startTime;
     String stopTime;
-
+    int NOTIFICATION_ID;
+    NotificationManager notificationManager;
+    NotificationCompat.Builder builder;
+    String notificationMessage;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("runtimer", "Jestem w on create");
         setContentView(R.layout.timer);
         if (savedInstanceState != null) {
             timeLast = savedInstanceState.getString("timeLast");
@@ -59,6 +69,7 @@ public class RunTimer extends Activity implements View.OnClickListener{
             originalTime = timeLast;
         }
         init();
+
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -67,10 +78,12 @@ public class RunTimer extends Activity implements View.OnClickListener{
         // Save our own state now
         outState.putString("timeLast", buildingClass.returnStringTimers());
         outState.putString("originalTime", originalTime);
+
     }
 
     private void init(){
         Log.i("RunTimer", "jestesmy w inice");
+        notificationMessage = "";
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
@@ -97,7 +110,7 @@ public class RunTimer extends Activity implements View.OnClickListener{
 
 
     public class TimersBuildingClass {
-        List<Timer> timers;
+        List<com.example.hodujjajko.Timer> timers;
         Iterator iterator;
         BuilderTimer builderTimer;
 
@@ -140,11 +153,17 @@ public class RunTimer extends Activity implements View.OnClickListener{
                 start();
             } else {
                 playSound();
-
-                    String points[] = originalTime.split("\\+");
-                    for (String v : points) {
-                        result += Double.parseDouble(v);
-                    }
+                if (notificationManager != null){
+                    notificationMessage = getString(R.string.message_end_timer);
+                    builder = new NotificationCompat.Builder(getApplicationContext())
+                            .setSmallIcon(R.drawable.kurczak1)
+                            .setContentTitle(notificationMessage);
+                    notificationManager.notify(NOTIFICATION_ID, builder.build());
+                }
+                String points[] = originalTime.split("\\+");
+                for (String v : points) {
+                    result += Double.parseDouble(v);
+                }
                 sumOfPoints = (int)(10*result);
                 Log.i("Run","suma"+sumOfPoints);
                 textViewTimer.setText("Zdobyto "+sumOfPoints+" punktów");
@@ -159,10 +178,19 @@ public class RunTimer extends Activity implements View.OnClickListener{
                 addToDatabase();
             }
 
+
+
         }
+        public String getTime(){
+            if(timers != null && !timers.isEmpty()) {
+                return timers.get(0).getTime();
+            }else return "";
+        }
+
         String returnStringTimers(){
             return builderTimer.returnChain();
         }
+
         void cancel(){
             if(!timers.isEmpty()) {
                 timers.get(0).cancel();
@@ -211,9 +239,11 @@ public class RunTimer extends Activity implements View.OnClickListener{
     @Override
     public void onDestroy(){
         super.onDestroy();
-
         buildingClass.cancel();
         Log.i("RunTimer", "usuwam timersy");
+        if(notificationManager != null) {
+            notificationManager.cancel(NOTIFICATION_ID);
+        }
     }
 
     public void addToDatabase()
@@ -228,6 +258,31 @@ public class RunTimer extends Activity implements View.OnClickListener{
         training.addTraining(t);
         training.close();
 
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(!notificationMessage.equals(getString(R.string.message_end_timer))) {
+            Log.i("rt","notificatiomes "+notificationMessage);
+            builder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.kurczak1)
+                            .setContentTitle(getString(R.string.message_timer));
+
+            notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
+        }
+    }
+
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(notificationManager != null) {
+            notificationManager.cancel(NOTIFICATION_ID);
+
+        }
     }
 
 }
