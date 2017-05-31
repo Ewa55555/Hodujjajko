@@ -3,10 +3,13 @@ package com.example.hodujjajko;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class SettingActivity extends Activity implements View.OnClickListener{
 
@@ -22,12 +25,24 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     }
 
     private void init(){
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
         study = (Button)findViewById(R.id.study);
         study.setOnClickListener(this);
         running = (Button)findViewById(R.id.running);
         running.setOnClickListener(this);
-        pedometr = (Button)findViewById(R.id.pedometr);
-        pedometr.setOnClickListener(this);
+        PackageManager pm = getPackageManager();
+        if (pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)) {
+            pedometr = new Button(this);
+            pedometr.setText(getString(R.string.pedometr_string));
+            layout.addView(pedometr);
+            pedometr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startPedometr();
+                }
+            });
+        }
+
     }
 
     @Override
@@ -36,9 +51,6 @@ public class SettingActivity extends Activity implements View.OnClickListener{
             case R.id.study:
                 Log.i("Jajko", "startujemy setting timer");
                 startSettingTimer();
-                break;
-            case R.id.pedometr:
-                startPedometr();
                 break;
             case R.id.running:
                 startRunning();

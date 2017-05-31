@@ -1,19 +1,19 @@
 package com.example.hodujjajko;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.*;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -68,11 +68,11 @@ public class TrainingAlert extends Activity {
     private void alert(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder
-                .setTitle("Powiadomienie")
+                .setTitle(getString(R.string.notification_string))
                 .setMessage(getString(R.string.alert_message_string)+" "+intent.getStringExtra("name")+"\n"+
                         temperatureString)
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.ok_string), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -87,7 +87,10 @@ public class TrainingAlert extends Activity {
     }
     private void weather(){
         GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
-        if (gpsTracker.canGetLocation()) {
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (gpsTracker.canGetLocation() && (
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
             latitude = gpsTracker.getLatitude();
             longitude = gpsTracker.getLongitude();
             Log.i("Alert","Weszlam do temp "+latitude+" "+longitude);
@@ -107,7 +110,7 @@ public class TrainingAlert extends Activity {
             };
             forecastService.LoadForecastDate(callback, latitude ,longitude );
         } else {
-            //gpsTracker.tryGetLocation();
+            alert();
             Log.i("trainingalert","nie ma temp");
         }
 

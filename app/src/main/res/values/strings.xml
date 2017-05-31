@@ -50,7 +50,7 @@
     <string name="your_activities">Twoje aktywności</string>
     <string name="message_timer">Masz włączony timer</string>
     <string name="message_end_timer">Koniec czasu</string>
-
+    <string name="notification_string">Powiadomienie</string>
     <string name="step_counter">android.hardware.sensor.stepcounter</string>
     <string name="step_detector">android.hardware.sensor.stepdetector</string>
 </resources>
