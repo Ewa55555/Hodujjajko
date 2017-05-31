@@ -79,7 +79,7 @@ public class Pedometr extends Activity implements SensorEventListener{
                 int day = c.get(Calendar.DATE);
                 stopTime = String.valueOf(day)+ "-" + String.valueOf(month+1)+"-"+ String.valueOf(year)+" "+String.valueOf(hour)+":"+String.valueOf(minute);
                 sumOfPoints = (int)Double.parseDouble(count.getText().toString());
-                onPause();
+                stop();
                 points();
                 addToDatabase();
             }
@@ -110,9 +110,14 @@ public class Pedometr extends Activity implements SensorEventListener{
     protected void onPause() {
         Log.i("Pedometr","pauza");
         super.onPause();
+
+
+    }
+
+    public void stop()
+    {
         activityRunning = false;
         sensorManager.unregisterListener(this);
-
     }
 
     @Override
@@ -167,10 +172,6 @@ public class Pedometr extends Activity implements SensorEventListener{
         training.addTraining(t);
         List<Training> e = training.fetchAllData();
         Log.i("Pedometr","dlugosc"+e.size());
-        for(Training z :e)
-        {
-            Log.i("Pedometr","wyniki z bazy" + z.points + " " + z.typeOfTraining + " " + z.duration + " " + z.start +" ");
-        }
         training.close();
 
     }
