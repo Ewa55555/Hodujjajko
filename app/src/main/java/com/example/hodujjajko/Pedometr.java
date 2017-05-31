@@ -3,6 +3,7 @@ package com.example.hodujjajko;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 public class Pedometr extends Activity implements SensorEventListener{
 
     private SensorManager sensorManager;
@@ -27,8 +33,8 @@ public class Pedometr extends Activity implements SensorEventListener{
     private int sumOfPoints = 0;
     private TextView info ;
     TrainingDao training;
-    Time startTime= new Time();
-    Time stopTime = new Time();
+    String startTime;
+    String stopTime;
 
 
     @Override
@@ -36,8 +42,15 @@ public class Pedometr extends Activity implements SensorEventListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pedometr);
         count = (TextView) findViewById(R.id.conterTextView);
-        startTime.setToNow();
+        final Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DATE);
+        startTime = String.valueOf(day)+ "-" + String.valueOf(month+1)+"-"+ String.valueOf(year)+" "+String.valueOf(hour)+":"+String.valueOf(minute);
         training = new TrainingDao(getApplicationContext());
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (savedInstanceState != null) {
             counting = savedInstanceState.getString("counting");
             count.setText(counting);
@@ -58,14 +71,20 @@ public class Pedometr extends Activity implements SensorEventListener{
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopTime.setToNow();
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DATE);
+                stopTime = String.valueOf(day)+ "-" + String.valueOf(month+1)+"-"+ String.valueOf(year)+" "+String.valueOf(hour)+":"+String.valueOf(minute);
                 sumOfPoints = (int)Double.parseDouble(count.getText().toString());
                 onPause();
                 points();
                 addToDatabase();
             }
         });
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
     }
 
     @Override
@@ -141,11 +160,17 @@ public class Pedometr extends Activity implements SensorEventListener{
         training.open();
         Training t = new Training();
         t.points = sumOfPoints;
-        t.duration = Integer.parseInt(count.getText().toString());
-        t.start = startTime.toString();
-        t.finish= stopTime.toString();
+        t.duration = String.valueOf(sumOfPoints);
+        t.start = startTime;
+        t.finish=stopTime;
         t.typeOfTraining="Krokomierz";
         training.addTraining(t);
+        List<Training> e = training.fetchAllData();
+        Log.i("Pedometr","dlugosc"+e.size());
+        for(Training z :e)
+        {
+            Log.i("Pedometr","wyniki z bazy" + z.points + " " + z.typeOfTraining + " " + z.duration + " " + z.start +" ");
+        }
         training.close();
 
     }

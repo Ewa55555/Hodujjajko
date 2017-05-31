@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button rearEgg;
     private Button schedule;
     private ImageView image;
+    private Button activities;
 
 
     @Override
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         image = (ImageView) findViewById(R.id.imageView);
         schedule = (Button)findViewById(R.id.Schedule);
         schedule.setOnClickListener(this);
+        activities = (Button) findViewById(R.id.activities);
+        activities.setOnClickListener(this);
 
     }
 
@@ -56,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.Schedule:
                 startSchedule();
+                break;
+            case R.id.activities:
+                startYourActivities();
                 break;
         }
     }
@@ -70,6 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent scheduleIntent = null;
         scheduleIntent = new Intent(getApplicationContext(), Schedule.class);
         startActivity(scheduleIntent);
+    }
+    private void startYourActivities(){
+        Intent activitiesIntenet = null;
+        activitiesIntenet = new Intent(getApplicationContext(), Activities.class);
+        startActivity(activitiesIntenet);
     }
 
 

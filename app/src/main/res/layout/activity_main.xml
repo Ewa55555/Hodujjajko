@@ -29,11 +29,10 @@
             android:text="@string/schedule_string" />
 
         <Button
-            android:id="@+id/Gallery"
+            android:id="@+id/activities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Galeria zdjęć"
-            tools:text="Galeria zdjęć" />
+            android:text="@string/your_activities" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -42,10 +41,5 @@
             android:layout_weight="0.05"
             app:srcCompat="@drawable/jajka" />
 
-        <ImageButton
-            android:id="@+id/takePhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

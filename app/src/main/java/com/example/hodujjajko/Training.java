@@ -11,7 +11,6 @@ public class Training {
     public String typeOfTraining;
     public String start;
     public String finish;
-    public int duration;
+    public String duration;
     public int points;
-    public boolean isDone;
 }

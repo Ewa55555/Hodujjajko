@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
@@ -38,9 +39,10 @@ public class RunTimer extends Activity implements View.OnClickListener{
     private String originalTime;
     TimersBuildingClass buildingClass;
     int sumOfPoints = 0;
+    double result=0;
     TrainingDao training;
-    Time startTime= new Time();
-    Time stopTime = new Time();
+    String startTime;
+    String stopTime;
 
 
 
@@ -69,7 +71,13 @@ public class RunTimer extends Activity implements View.OnClickListener{
 
     private void init(){
         Log.i("RunTimer", "jestesmy w inice");
-        startTime.setToNow();
+        final Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DATE);
+        startTime = String.valueOf(day)+ "-" + String.valueOf(month+1)+"-"+ String.valueOf(year)+" "+String.valueOf(hour)+":"+String.valueOf(minute);
         training = new TrainingDao(getApplicationContext());
         textViewTimer = (TextView)findViewById(R.id.textViewTime);
         textViews = new ArrayList<>(QUEUE_IDS.length);
@@ -132,7 +140,7 @@ public class RunTimer extends Activity implements View.OnClickListener{
                 start();
             } else {
                 playSound();
-                double result = 0;
+
                     String points[] = originalTime.split("\\+");
                     for (String v : points) {
                         result += Double.parseDouble(v);
@@ -140,7 +148,13 @@ public class RunTimer extends Activity implements View.OnClickListener{
                 sumOfPoints = (int)(10*result);
                 Log.i("Run","suma"+sumOfPoints);
                 textViewTimer.setText("Zdobyto "+sumOfPoints+" punktów");
-                stopTime.setToNow();
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DATE);
+                stopTime = String.valueOf(day)+ "-" + String.valueOf(month+1)+"-"+ String.valueOf(year)+" "+String.valueOf(hour)+":"+String.valueOf(minute);
                 points();
                 addToDatabase();
             }
@@ -207,8 +221,9 @@ public class RunTimer extends Activity implements View.OnClickListener{
         training.open();
         Training t = new Training();
         t.points = sumOfPoints;
-        t.start = startTime.toString();
-        t.finish= stopTime.toString();
+        t.start = startTime;
+        t.finish= stopTime;
+        t.duration=String.valueOf(result);
         t.typeOfTraining="Stoper";
         training.addTraining(t);
         training.close();

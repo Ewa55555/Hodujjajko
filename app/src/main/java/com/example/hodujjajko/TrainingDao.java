@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,7 @@ public class TrainingDao implements ITrainingDAO{
     ContentValues initialValues = new ContentValues();
     private String[] allColumns = { DatabaseHelper.COLUMN_ID,
             DatabaseHelper.COLUMN_TYPE_OF_TRAINING, DatabaseHelper.COLUMN_START,
-            DatabaseHelper.COLUMN_FINISH, DatabaseHelper.COLUMN_DURATION,
-            DatabaseHelper.COLUMN_POINTS, DatabaseHelper.COLUMN_IS_DONE };
+            DatabaseHelper.COLUMN_FINISH, DatabaseHelper.COLUMN_POINTS,DatabaseHelper.COLUMN_DURATION};
 
     public TrainingDao(Context context)
     {
@@ -37,6 +37,7 @@ public class TrainingDao implements ITrainingDAO{
     @Override
     public boolean addTraining(Training training)
     {
+        Log.i("Dataabase","dodano");
         setContentValue(training);
         try {
             return database.insert(DatabaseHelper.TABLE_TRAINING, null, getContentValue()) > 0;
@@ -81,15 +82,14 @@ public class TrainingDao implements ITrainingDAO{
         return trainingList;
     }
     private Training cursorToTraining (Cursor cursor) {
-        //format daty ?
         Training training= new Training();
         training.id = cursor.getInt(0);
         training.typeOfTraining = cursor.getString(1);
         training.start = cursor.getString(2);
         training.finish = cursor.getString(3);
-        training.duration = cursor.getInt(4);
-        training.points = cursor.getInt(5);
-        training.isDone = Boolean.getBoolean(cursor.getString(6));
+        training.points = cursor.getInt(4);
+        training.duration = cursor.getString(5);
+
 
         return training;
     }
@@ -100,7 +100,6 @@ public class TrainingDao implements ITrainingDAO{
         initialValues.put(DatabaseHelper.COLUMN_FINISH, training.finish);
         initialValues.put(DatabaseHelper.COLUMN_DURATION, training.duration);
         initialValues.put(DatabaseHelper.COLUMN_POINTS, training.points);
-        initialValues.put(DatabaseHelper.COLUMN_IS_DONE, training.isDone);
 
     }
     private ContentValues getContentValue() {

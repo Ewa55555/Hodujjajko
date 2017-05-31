@@ -107,7 +107,7 @@ public class GPSActivity extends Activity {
     {
         training.open();
         Training t = new Training();
-        t.duration = Integer.parseInt(distance.getText().toString());
+        t.duration = (distance.getText().toString());
         t.start = String.valueOf(startTime);
         t.typeOfTraining="Bieganie";
         training.addTraining(t);
