@@ -43,7 +43,7 @@ public class Activities extends Activity{
 
         for(Training t : listOfTraining)
         {
-            stringList.add(t.id+" typ treningu: "+t.typeOfTraining+"\n"+" wynik: " + t.duration+ " punkty: " + t.points+
+            stringList.add("typ treningu: "+t.typeOfTraining+"\n"+" wynik: " + t.duration+ " punkty: " + t.points+
                     " start: " + t.start);
         }
 

@@ -90,7 +90,10 @@ public class RunTimer extends Activity implements View.OnClickListener{
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DATE);
-        startTime = String.valueOf(day)+ "-" + String.valueOf(month+1)+"-"+ String.valueOf(year)+" "+String.valueOf(hour)+":"+String.valueOf(minute);
+        if(minute<10)
+            startTime = String.valueOf(day)+ "-" + String.valueOf(month+1)+"-"+ String.valueOf(year)+" "+String.valueOf(hour)+":0"+String.valueOf(minute);
+        else
+            startTime = String.valueOf(day)+ "-" + String.valueOf(month+1)+"-"+ String.valueOf(year)+" "+String.valueOf(hour)+":"+String.valueOf(minute);
         training = new TrainingDao(getApplicationContext());
         textViewTimer = (TextView)findViewById(R.id.textViewTime);
         textViews = new ArrayList<>(QUEUE_IDS.length);
