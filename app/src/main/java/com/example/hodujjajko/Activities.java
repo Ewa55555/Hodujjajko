@@ -36,9 +36,9 @@ public class Activities extends Activity{
 
         for(Training t : listOfTraining)
         {
-            stringList.add(getString(R.string.training_type_string)+t.typeOfTraining+"\n"+
-                    getString(R.string.result_string) + t.duration+ getString(R.string.points_string)
-                    + t.points + getString(R.string.start_of_training_string) + t.start);
+            stringList.add(getString(R.string.training_type_string)+ " " +t.typeOfTraining+" \n "+
+                    getString(R.string.result_string) + " " + t.duration+ getString(R.string.points_string)
+                    + " "+ t.points  +  " \n"+ getString(R.string.start_of_training_string) + t.start);
         }
 
 

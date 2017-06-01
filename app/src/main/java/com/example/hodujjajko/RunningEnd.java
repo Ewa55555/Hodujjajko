@@ -4,6 +4,7 @@ package com.example.hodujjajko;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,6 +45,7 @@ public class RunningEnd extends FragmentActivity implements OnMapReadyCallback {
 
         PolylineOptions polylineOptions = new PolylineOptions();
         for (int i = 0; i < locations.size() - 1; i++) {
+            Log.i("MAPY","jestem w mapie");
             polylineOptions.add(new LatLng(locations.get(i).latitude, locations.get(i).longitude),
                     new LatLng(locations.get(i + 1).latitude, locations.get(i + 1).longitude));
             googleMap.addMarker(new MarkerOptions()

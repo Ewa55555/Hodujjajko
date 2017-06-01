@@ -19,6 +19,7 @@ public class GPSTrackerRunning extends GPSTracker{
     public void onLocationChanged(android.location.Location location) {
         locationDAO.open();
         if (!locationDAO.fetchAllData().isEmpty()) {
+            Log.i("GPS","dane nie są puste");
             double oldLatitude = latitude;
             double oldLongitude = longitude;
             latitude = location.getLatitude();
