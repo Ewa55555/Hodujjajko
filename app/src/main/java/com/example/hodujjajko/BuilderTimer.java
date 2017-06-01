@@ -1,6 +1,5 @@
 package com.example.hodujjajko;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,12 +13,12 @@ public class BuilderTimer implements IBuilderTimer {
     private TextView textView;
 
     public BuilderTimer(String text, TextView textView){
-        Log.i("BuilderTimer", "w buildertimer text "+ text);
         durations = text.split("\\+");
         factory = new Factory();
         chainOfTimers = new ArrayList<>();
         this.textView = textView;
     }
+
     @Override
     public void buildChainOfTimers() {
         for(int i = 0; i < durations.length; i++){
@@ -37,9 +36,7 @@ public class BuilderTimer implements IBuilderTimer {
         String result = "";
         if(!chainOfTimers.isEmpty()) {
             for (int i = 0; i < durations.length; i++) {
-                Log.i("BuilderTimer", "wynik dzielenia " + chainOfTimers.get(i).getMillis() / 60000L);
                 result += Double.toString((double) chainOfTimers.get(i).getMillis() / 60000) + "+";
-                Log.i("BuilderTimer", "tworze stringa spowrotem " + result);
             }
         }
         return result;

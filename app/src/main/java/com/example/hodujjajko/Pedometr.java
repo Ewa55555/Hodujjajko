@@ -2,15 +2,11 @@ package com.example.hodujjajko;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -61,12 +55,6 @@ public class Pedometr extends Activity implements SensorEventListener{
             counting = "0";
         }
 
-        PackageManager pm = getPackageManager();
-        if (pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_STEP_COUNTER)) {
-            Log.i("Pedometr", "czujnik jest widoczny");
-        } else {
-            Log.i("Pedometr", "Brak czujnika");
-        }
 
 
         stop = (Button) findViewById(R.id.stopButton);
@@ -104,16 +92,14 @@ public class Pedometr extends Activity implements SensorEventListener{
         if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
         } else {
-            Toast.makeText(this, "Sensor jest niedostępny!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.sensor_unavailable_string), Toast.LENGTH_LONG).show();
         }
 
     }
 
     @Override
     protected void onPause() {
-        Log.i("Pedometr","pauza");
         super.onPause();
-
 
     }
 
@@ -128,7 +114,6 @@ public class Pedometr extends Activity implements SensorEventListener{
         if (activityRunning) {
             count.setText(String.valueOf(event.values[0]));
         }
-
     }
 
     @Override
@@ -142,7 +127,7 @@ public class Pedometr extends Activity implements SensorEventListener{
 
     public void points() {
         info.setText("");
-        count.setText("Zdobyto " + sumOfPoints + " punktów");
+        count.setText(getString(R.string.score_string) + sumOfPoints + getString(R.string.score_points_string));
         stop.setVisibility(View.INVISIBLE);
         LinearLayout lL = (LinearLayout) findViewById(R.id.counter);
         ImageView image = new ImageView(this);
@@ -174,7 +159,6 @@ public class Pedometr extends Activity implements SensorEventListener{
         t.typeOfTraining="Krokomierz";
         training.addTraining(t);
         List<Training> e = training.fetchAllData();
-        Log.i("Pedometr","dlugosc"+e.size());
         training.close();
 
     }

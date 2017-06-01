@@ -1,10 +1,5 @@
 package com.example.hodujjajko;
 
-import java.util.Date;
-
-/**
- * Created by Kasia on 2017-05-20.
- */
 
 public class Training {
     public int id;

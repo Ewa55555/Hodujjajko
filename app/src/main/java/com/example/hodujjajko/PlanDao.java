@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +33,8 @@ public class PlanDao implements IPlanDAO {
     public boolean addPlan(Plan plan) {
         setContentValue(plan);
         try {
-            Log.i("Database", "dodalem do bazy jeej");
             return database.insert(DatabaseHelper.TABLE_PLAN, null, getContentValue()) > 0;
         } catch (SQLiteConstraintException ex){
-            Log.i("Database","pupa" +ex.getMessage());
             return false;
         }
     }
@@ -89,10 +86,7 @@ public class PlanDao implements IPlanDAO {
         plan.timeStart = cursor.getString(3);
         plan.timeEnd = cursor.getString(4);
         plan.dayOfWeek = cursor.getInt(5);
-        Log.i("SCHe","cursorjakie"+cursor.getInt(6));
         plan.isOnce = (cursor.getInt(6)!= 0);
-        Log.i("Shce","isOnce po wyciagnieciu"+plan.isOnce);
-        //plan.isOnce = Boolean.parseBoolean(String.valueOf(cursor.getInt(4)));
         return plan;
     }
 
@@ -102,14 +96,11 @@ public class PlanDao implements IPlanDAO {
         initialValues.put(DatabaseHelper.COLUMN_TIME_START_PLAN, plan.timeStart);
         initialValues.put(DatabaseHelper.COLUMN_TIME_END_PLAN, plan.timeEnd);
         initialValues.put(DatabaseHelper.COLUMN_DAY_OF_WEEK_PLAN, plan.dayOfWeek);
-        if(plan.isOnce == true) {
-            Log.i("Sch", "ustawiam true");
+        if(plan.isOnce) {
             initialValues.put(DatabaseHelper.COLUMN_IS_ONCE, 1);
         }
         else
             initialValues.put(DatabaseHelper.COLUMN_IS_ONCE, 0);
-
-
     }
     private ContentValues getContentValue() {
         return initialValues;

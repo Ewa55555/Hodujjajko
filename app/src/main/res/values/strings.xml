@@ -51,6 +51,17 @@
     <string name="message_timer">Masz włączony timer</string>
     <string name="message_end_timer">Koniec czasu</string>
     <string name="notification_string">Powiadomienie</string>
+    <string name="no_activities_string">Brak aktywności</string>
+    <string name="result_string"> wynik: </string>
+    <string name="points_string"> punkty: </string>
+    <string name="training_type_string">typ treningu: </string>
+    <string name="start_of_training_string"> start: </string>
+    <string name="location_string">Twoja lokalizacja to</string>
+    <string name="settings_string">Ustawienia</string>
+    <string name="alert_settings_string">GPS nie jest włączony. Czy chcesz iść do ustawień?</string>
+    <string name="sensor_unavailable_string">Sensor niedostępny</string>
+    <string name="score_string">Zdobyto </string>
+    <string name="score_points_string"> punktów</string>
     <string name="step_counter">android.hardware.sensor.stepcounter</string>
     <string name="step_detector">android.hardware.sensor.stepdetector</string>
 </resources>

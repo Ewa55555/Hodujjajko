@@ -1,12 +1,9 @@
 package com.example.hodujjajko;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +19,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class CreatingSchedule extends AppCompatActivity implements View.OnClickListener{
 
@@ -43,7 +37,6 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     private static TextView dayView;
     private Button saveButton;
     private List<String> days;
-    private static long milis;
 
     private PlanDao plan;
     private int regularity;
@@ -128,15 +121,12 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
                 if (startTimeView.getText().equals("") || endTimeView.getText().equals("") ||
                         frequencyView.getText().equals("") || dayView.getText().equals("") ||
                         scheduleName.getText().equals("")){
-                    Log.i("CreatingSchedule", "puste");
                     Toast.makeText(getApplicationContext(), getString(R.string.blank_string), Toast.LENGTH_LONG).show();
                 }else {
                     addToDatabase();
                     Toast.makeText(getApplicationContext(), getString(R.string.activity_added_string), Toast.LENGTH_LONG).show();
                     finish();
                 }
-
-
             }
         });
 
@@ -148,20 +138,15 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            // Use the current time as the default values for the picker
             final Calendar c = Calendar.getInstance();
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
-            // Create a new instance of TimePickerDialog and return
             return new TimePickerDialog(getActivity(), this, hour, minute, true);
         }
-
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             Bundle bundle = getArguments();
             int id = bundle.getInt("textViewId");
-            Log.i("CreatingSchedule", "id w onTimeSet "+ id);
             ((TextView)getActivity().findViewById(id)).setText(setTimeString(hourOfDay, minute));
         }
     }
@@ -169,7 +154,6 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         DialogFragment newFragment = new TimePickerFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("textViewId", textViewId);
-        Log.i("CreatingSchedule", "id w showTimePicker "+ textViewId);
         newFragment.setArguments(bundle);
         newFragment.show(getFragmentManager(), "timePicker");
     }
@@ -180,20 +164,15 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-            // Use the current time as the default values for the picker
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of TimePickerDialog and return
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
 
-
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
             dayView.setText(setDateString(year, month, dayOfMonth));
         }
     }
@@ -206,7 +185,7 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
             Dialog dialog = new Dialog(getActivity());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.days_dialog);
-            List<String> stringList=new ArrayList<>();  // here is list
+            List<String> stringList=new ArrayList<>();
 
             stringList.add(getString(R.string.monday));
             stringList.add(getString(R.string.tuesday));
@@ -218,8 +197,8 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
 
             RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radio_group);
 
-            for(int i=0;i<stringList.size();i++){
-                RadioButton rb=new RadioButton(getActivity());
+            for(int i = 0; i < stringList.size(); i++){
+                RadioButton rb = new RadioButton(getActivity());
                 rb.setText(stringList.get(i));
                 rg.addView(rb);
             }
@@ -242,7 +221,6 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
             return dialog;
         }
 
-
     }
 
 
@@ -259,36 +237,28 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
     private static String setTimeString(int hourOfDay, int minute) {
         String hour = "" + hourOfDay;
         String min = "" + minute;
-
         if (hourOfDay < 10)
             hour = "0" + hourOfDay;
         if (minute < 10)
             min = "0" + minute;
-
         String timeString = hour + ":" + min + ":00";
         return timeString;
     }
 
     private static String setDateString(int year, int monthOfYear, int dayOfMonth) {
-
-        // Increment monthOfYear for Calendar/Date -> Time Format setting
         monthOfYear++;
         String mon = "" + monthOfYear;
         String day = "" + dayOfMonth;
-
         if (monthOfYear < 10)
             mon = "0" + monthOfYear;
         if (dayOfMonth < 10)
             day = "0" + dayOfMonth;
-
         String dateString = day + "." + mon + "." + year;
         return dateString;
     }
 
     @Override
     public void onClick(View v) {
-
-
     }
 
     public void addToDatabase()
@@ -296,17 +266,13 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         Plan planData = new Plan();
         if (regularity==0)
         {
-            Log.i("SCHe","jestem");
             planData.isOnce = true;
-            Log.i("SCHe","wartosc isOnce"+planData.isOnce);
             planData.day=dayView.getText().toString();
         }
         else
         {
             planData.isOnce = false;
-            Log.i("S", "dzien tyg "+days.indexOf(dayView.getText().toString()));
             planData.dayOfWeek = days.indexOf(dayView.getText().toString()) + 1;
-
         }
 
         planData.timeStart = startTimeView.getText().toString();
@@ -332,6 +298,5 @@ public class CreatingSchedule extends AppCompatActivity implements View.OnClickL
         days.add(getString(R.string.friday));
         days.add(getString(R.string.saturday));
     }
-
 }
 

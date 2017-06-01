@@ -6,14 +6,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
-import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Kasia on 2017-05-20.
- */
 
 public class TrainingDao implements ITrainingDAO{
     private SQLiteDatabase database;
@@ -37,12 +32,10 @@ public class TrainingDao implements ITrainingDAO{
     @Override
     public boolean addTraining(Training training)
     {
-        Log.i("Dataabase","dodano");
         setContentValue(training);
         try {
             return database.insert(DatabaseHelper.TABLE_TRAINING, null, getContentValue()) > 0;
         } catch (SQLiteConstraintException ex){
-            Log.w("Database", ex.getMessage());
             return false;
         }
     }

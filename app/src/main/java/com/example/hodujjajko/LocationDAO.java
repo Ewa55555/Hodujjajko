@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +32,8 @@ public class LocationDAO implements ILocationDAO {
     public boolean addLocation(Location location) {
         setContentValue(location);
         try {
-            Log.i("Database", "dodalem do bazy jeej");
             return database.insert(DatabaseHelper.TABLE_LOCATION, null, getContentValue()) > 0;
         } catch (SQLiteConstraintException ex){
-            Log.i("Database","pupa" +ex.getMessage());
             return false;
         }
 
@@ -92,8 +89,6 @@ public class LocationDAO implements ILocationDAO {
     private void setContentValue(Location location) {
         initialValues.put(DatabaseHelper.COLUMN_LATITUDE, location.latitude);
         initialValues.put(DatabaseHelper.COLUMN_LONGITUDE, location.longitude);
-
-
     }
     private ContentValues getContentValue() {
         return initialValues;

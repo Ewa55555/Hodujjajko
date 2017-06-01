@@ -49,8 +49,6 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onResume(){
         super.onResume();
-        Log.i("RESUME", "RESUME");
-        Log.i("RESUME", "tworze nowe dao");
         planDao = new PlanDao(this);
         planDao.open();
         List<Plan> p = planDao.fetchAllData();
@@ -69,17 +67,10 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
                 planDay = new ArrayList<Plan>();
                 for (int i = 0; i < planList.size(); i++) {
                     Plan plan = planList.get(i);
-                    Log.i("Schedule", "rozpatruje "+plan.name);
                     if ((plan.isOnce && plan.getDay() == dayOfMonth && plan.getMonth() == (month + 1)
                             && plan.getYear() == year) || (!plan.isOnce &&
                             checkDayOfWeek(year, month, dayOfMonth) == plan.dayOfWeek)) {
                         planDay.add(plan);
-                        Log.i("Schedule", "dodaje do listy "+plan.name);
-                    }
-                    else{
-                        Log.i("Schedule", "jestem w else");
-                        Log.i("Schedule", "dzien w rzeczyw "+checkDayOfWeek(year, month, dayOfMonth));
-                        Log.i("Schedule", "w bazie"+plan.dayOfWeek);
                     }
                 }
                 planDao.close();
@@ -87,7 +78,7 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
                     Toast.makeText(getApplicationContext(), getString(R.string.no_events_string), Toast.LENGTH_SHORT).show();
                 } else {
                     Bundle args = new Bundle();
-                    args.putString("date", dayOfMonth+"."+(month+1)+"."+year);
+                    args.putString("date", dayOfMonth + "." + (month + 1) + "." + year);
                     FragmentManager fm = getFragmentManager();
                     PlanOfDay dialogFragment = new PlanOfDay();
                     dialogFragment.setArguments(args);
@@ -101,7 +92,6 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
     public int checkDayOfWeek(int year, int month, int day) {
         Calendar c = Calendar.getInstance();
         c.set(year, month, day);
-        Log.i("checkday","wedlug funkcji dzien"+year+" "+(month+1)+" "+day+" jest "+c.get(Calendar.DAY_OF_WEEK));
         return c.get(Calendar.DAY_OF_WEEK);
     }
 
@@ -163,20 +153,15 @@ public class Schedule extends AppCompatActivity implements View.OnClickListener{
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     getActivity(), 234324243, intent, 0);
             AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
-            Log.i("schedule", "ustawiam powiadomienie na "+(convertToMillis(start)));
             alarmManager.set(AlarmManager.RTC_WAKEUP, convertToMillis(start) - 5*60000, pendingIntent);
-            Log.i("Alert", "ustawiam");
             Toast.makeText(getActivity(), getString(R.string.alert_added_string),Toast.LENGTH_SHORT).show();
         }
         private long convertToMillis(String s){
-            Log.i("creating", "string "+s);
             SimpleDateFormat sdf =  new SimpleDateFormat("kk:mm:ss dd.MM.yyyy");
             try {
                 Date date = sdf.parse(s);
-                Log.i("creating", "milisek "+date.getTime());
                 return date.getTime();
             }catch (Exception e){
-                Log.i("creating", "weszlam do catcha");
                 return 0;
             }
         }

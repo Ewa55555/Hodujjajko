@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper instance = null;
     public static final String DATABASE_NAME = "database";
-    public static final String TABLE_TRAINING="training"; // tutaj musimy dac nazwy tabeli jakie chcemy
+    public static final String TABLE_TRAINING="training";
     public static final String COLUMN_ID ="_id";
     public static final String COLUMN_TYPE_OF_TRAINING="typeOfTraining";
     public static final String COLUMN_START="start";
@@ -26,7 +26,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_IS_ONCE="isOnce";
     public static final String COLUMN_NAME_PLAN="name";
     public static final String COLUMN_TIME_END_PLAN="timeEnd";
-
 
 
     private static final String CREATE_TRAINIG = "create table " + TABLE_TRAINING + "("+ COLUMN_ID
@@ -53,11 +52,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(instance == null)
         {
             instance = new DatabaseHelper(context.getApplicationContext());
-
-
         }
         return instance;
-
     }
 
     @Override
@@ -71,6 +67,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRAINING);
         onCreate(db);
-
     }
 }

@@ -11,7 +11,6 @@ public class TimerObserver implements Observer{
     }
     @Override
     public void update() {
-        Log.i("TimeObserver", "UPDATEEE observer");
         timersBuildingClass.update();
     }
 }

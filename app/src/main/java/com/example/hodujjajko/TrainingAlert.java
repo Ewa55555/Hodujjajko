@@ -44,7 +44,7 @@ public class TrainingAlert extends Activity {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         if (gravitySensor == null){
-            Toast.makeText(this,"Nie ma sensoru", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.sensor_unavailable_string), Toast.LENGTH_SHORT).show();
         }
         else {
             gravityEventListener = new SensorEventListener() {
@@ -62,8 +62,6 @@ public class TrainingAlert extends Activity {
             };
         }
         weather();
-        Log.i("Alert", "temperatura przed alertem "+temperatureString);
-
     }
     private void alert(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -76,7 +74,6 @@ public class TrainingAlert extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        Log.i("alert", "usuwam");
                         mp.stop();
                         finish();
                     }
@@ -93,25 +90,22 @@ public class TrainingAlert extends Activity {
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
             latitude = gpsTracker.getLatitude();
             longitude = gpsTracker.getLongitude();
-            Log.i("Alert","Weszlam do temp "+latitude+" "+longitude);
             Callback<Forecast> callback = new Callback<Forecast>() {
                 @Override
                 public void onResponse(Call<Forecast> call, Response<Forecast> response) {
                     temperature = (response.body().getCurrently().getTemperature() - 32) * 5 / 9;
                     temperatureString = getString(R.string.weather_message_string)+
                             (int)temperature+getString(R.string.degrees_string);
-                    Log.i("Alert",temperatureString);
                     alert();
                 }
                 @Override
                 public void onFailure(Call<Forecast> call, Throwable t) {
-                    Log.i("Main","alo"+t.getMessage());
+                    Log.i("Main",t.getMessage());
                 }
             };
             forecastService.LoadForecastDate(callback, latitude ,longitude );
         } else {
             alert();
-            Log.i("trainingalert","nie ma temp");
         }
 
     }

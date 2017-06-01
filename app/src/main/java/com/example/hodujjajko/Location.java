@@ -1,8 +1,5 @@
 package com.example.hodujjajko;
 
-/**
- * Created by Ewunia on 24.05.2017.
- */
 
 public class Location {
     public int id;

@@ -1,23 +1,16 @@
 package com.example.hodujjajko;
 
 import android.app.Activity;
-import android.app.IntentService;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Activities extends Activity{
@@ -38,13 +31,14 @@ public class Activities extends Activity{
 
         if(listOfTraining.isEmpty())
         {
-            Toast.makeText(this, "Brak aktywności", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.no_activities_string), Toast.LENGTH_LONG).show();
         }
 
         for(Training t : listOfTraining)
         {
-            stringList.add("typ treningu: "+t.typeOfTraining+"\n"+" wynik: " + t.duration+ " punkty: " + t.points+
-                    " start: " + t.start);
+            stringList.add(getString(R.string.training_type_string)+t.typeOfTraining+"\n"+
+                    getString(R.string.result_string) + t.duration+ getString(R.string.points_string)
+                    + t.points + getString(R.string.start_of_training_string) + t.start);
         }
 
 
@@ -55,7 +49,6 @@ public class Activities extends Activity{
 
         arrayAdapter.notifyDataSetChanged();
         registerForContextMenu(listView);
-//        listView.setOnItemClickListener(this);
         trainingDao.close();
     }
 
@@ -65,6 +58,7 @@ public class Activities extends Activity{
                                     ContextMenu.ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.menu, menu);
     }
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
@@ -72,20 +66,13 @@ public class Activities extends Activity{
         switch(item.getItemId()) {
             case R.id.delete:
                 arrayAdapter.notifyDataSetChanged();
-                Log.i("Ac","jestem w delete");
-                Log.i("Ac", "ktory to"+arrayAdapter.getItemId(info.position));
                 delete((int)arrayAdapter.getItemId(info.position));
                 arrayAdapter.remove(arrayAdapter.getItem(info.position));
                 if(arrayAdapter.isEmpty())
                 {
-                    Toast.makeText(this, "Brak aktywności", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.no_activities_string), Toast.LENGTH_LONG).show();
                 }
-
-//                arrayAdapter.notifyDataSetChanged();
-
-
         }
-
         return true;
     }
 
@@ -99,7 +86,6 @@ public class Activities extends Activity{
     @Override
     protected void onPause() {
         super.onPause();
-
     }
 
     @Override
@@ -108,10 +94,6 @@ public class Activities extends Activity{
     }
     @Override
     public void onDestroy() {
-
         super.onDestroy();
     }
-
-
-
 }

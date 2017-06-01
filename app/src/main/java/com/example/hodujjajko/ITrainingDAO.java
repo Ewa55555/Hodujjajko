@@ -1,8 +1,7 @@
 package com.example.hodujjajko;
 
-import android.database.Cursor;
-
 import java.util.List;
+
 public interface ITrainingDAO {
     public boolean addTraining(Training training);
     public void deleteTraining(Training training);

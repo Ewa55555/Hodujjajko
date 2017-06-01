@@ -2,9 +2,6 @@ package com.example.hodujjajko;
 
 import java.util.List;
 
-/**
- * Created by Ewunia on 24.05.2017.
- */
 
 public interface ILocationDAO {
     public boolean addLocation(Location location);

@@ -3,8 +3,6 @@ package com.example.hodujjajko;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
 
 public class ReminderBroadcastReceiver extends BroadcastReceiver {
     @Override
@@ -15,6 +13,5 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         context.startActivity(i);
-        Log.i("Reminder","reminder");
     }
 }

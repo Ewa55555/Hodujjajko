@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -49,7 +47,6 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.study:
-                Log.i("Jajko", "startujemy setting timer");
                 startSettingTimer();
                 break;
             case R.id.running:
@@ -67,13 +64,11 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     private void startPedometr(){
         Intent pedometrIntent = null;
         pedometrIntent = new Intent(getApplicationContext(), Pedometr.class);
-        Log.i("setting","wlaczam krokomierz");
         startActivity(pedometrIntent);
     }
     private void startRunning(){
         Intent runningIntent = null;
         runningIntent = new Intent(getApplicationContext(), GPSActivity.class);
-        Log.i("settingactivity", "kliklam startRunning");
         startActivity(runningIntent);
     }
 }

@@ -18,7 +18,6 @@ public class GPSTrackerRunning extends GPSTracker{
     @Override
     public void onLocationChanged(android.location.Location location) {
         locationDAO.open();
-        Log.i("GPS", "onlocationchanged");
         if (!locationDAO.fetchAllData().isEmpty()) {
             double oldLatitude = latitude;
             double oldLongitude = longitude;
@@ -28,12 +27,10 @@ public class GPSTrackerRunning extends GPSTracker{
             results[0] = 0;
             android.location.Location.distanceBetween(oldLatitude, oldLongitude,
                     latitude, longitude, results);
-            Log.i("GPS", "distans " + results[0]);
             Float distance = Float.parseFloat(textView.getText().toString()) + results[0];
 
             textView.setText(distance.toString());
 
-            Log.i("GPS","old" +oldLatitude+" "+oldLongitude+" location"+latitude+" "+longitude);
         }
         locationDAO.addLocation(new com.example.hodujjajko.Location(latitude, longitude));
         locationDAO.close();
