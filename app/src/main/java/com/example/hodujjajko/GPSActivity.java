@@ -104,7 +104,7 @@ public class GPSActivity extends Activity {
         Training t = new Training();
         t.duration = (distance.getText().toString());
         t.start = startTimeTraining;
-        t.points = Integer.parseInt(distance.getText().toString());
+        t.points = (int)Float.parseFloat(distance.getText().toString());
         t.typeOfTraining="Bieganie";
         training.addTraining(t);
         training.close();
