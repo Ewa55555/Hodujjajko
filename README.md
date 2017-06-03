@@ -24,3 +24,9 @@ o aktywności 5 minut przed jej zakończeniem może kliknąć w datę na kalenda
 5 minut przed użytkownik otrzyma informacje o swojej aktywności poprzez wyświetlenie się okienka z nazwą aktywności i temperaturą na zewnątrz
 (wykorzystany serwer pogodowy) oraz poprzez sygnał dzwiękowy, który wyłącza się po wciśnięciu przycisku lub podniesieniu telefonu 
 (wymagany sensor GRAVITY). 
+
+<strong> Instalacja
+<br>
+Aby zainstalować aplikację należy pobrać pliki z GitHuba, podpiąć telefon do komputera i uruchomić projekt (poprzez np. Android Studio)
+wybierając jako urządzenie podpięty telefon.
+</strong>
