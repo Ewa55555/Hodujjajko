@@ -25,8 +25,8 @@ o aktywności 5 minut przed jej zakończeniem może kliknąć w datę na kalenda
 (wykorzystany serwer pogodowy) oraz poprzez sygnał dzwiękowy, który wyłącza się po wciśnięciu przycisku lub podniesieniu telefonu 
 (wymagany sensor GRAVITY). 
 
-<strong> Instalacja
+<h3> Instalacja
 <br>
 Aby zainstalować aplikację należy pobrać pliki z GitHuba, podpiąć telefon do komputera i uruchomić projekt (poprzez np. Android Studio)
 wybierając jako urządzenie podpięty telefon.
-</strong>
+</h3>
