@@ -1,5 +1,5 @@
 # Hodujjajko
-Aplikacja Hoduj jajko służy do monitorowania swojej aktywności. Aby aplikacja działa w pełni wymagane jest włączenie internetu
+Aplikacja Hoduj jajko służy do monitorowania aktywności. Aby aplikacja działa w pełni wymagane jest włączenie internetu
 oraz czujnika GPS. W przypadku słabego zasięgu niektóre funkcje mogą nie działać poprawnie. Dodatkowo wymagane są sensory
 GRAVITY oraz STEP COUNTER jednakże bez nich aplikacja działa poprawnie nie włączając niektórych funkcji. Aplikacja mierzy naszą aktywność
 na 3 różne sposoby:
